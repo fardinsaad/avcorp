@@ -1,0 +1,78 @@
+<section id="scale">
+        <div class="wrap">
+            <div class="sh">
+                <div class="sh-label">Phases 1 and 2</div>
+                <div class="sh-title">Training, IAA, and Cross-Domain Test</div>
+                <div class="sh-sub">Phase 1 built the corpus. Phase 2 trains a detector on it, checks the reasoning
+                    traces against human annotators, and tests the detector on games that people played.</div>
+            </div>
+
+            <div class="p2-top">
+                <div class="p2-p1">
+                    <div class="p2-label">Phase 1 · Corpus Creation</div>
+                    <div class="p2-title">250 Games</div>
+                    <ul class="p2-items">
+                        <li>Six-stage scaffolding built and verified</li>
+                        <li>37-tactic 4×4 behavior matrix</li>
+                        <li>4,000 tactic-labeled utterances</li>
+                        <li>1,000 investigator Theory of Mind traces</li>
+                        <li>Blind LLM-judge checks on dialogue and traces</li>
+                    </ul>
+                    <div class="p2-badge p2-done">COMPLETE ✓</div>
+                </div>
+
+                <div class="p2-scale" id="p2Scale">
+                    <div class="p2-label">Same scaffold, larger corpus</div>
+                    <div class="p2-count"><b id="p2Games">250</b><span>games</span></div>
+                    <div class="p2-dots" id="p2Dots" aria-hidden="true"></div>
+                    <div class="p2-track" aria-hidden="true">
+                        <div class="p2-fill" id="p2Fill"></div>
+                        <span class="p2-mk" style="left:5%">250</span>
+                        <span class="p2-mk" style="left:40%">2,000</span>
+                        <span class="p2-mk" style="left:100%">5,000</span>
+                    </div>
+                    <p class="p2-cap">The six-stage scaffolding can scale AVCORP from 250 to <b>2,000 to 5,000
+                            games</b>. Quest outcomes, teams, and tactic offsets are permuted, and every stage keeps its
+                        verification thresholds. Each dot is 50 games.</p>
+                </div>
+            </div>
+
+            <div class="p2-arrow"><span>Phase 2</span></div>
+
+            <div class="p2-grid">
+                <div class="p2-card p2-c-train">
+                    <div class="p2-head"><span class="p2-num">01</span><span class="p2-name">Detector training</span><span class="p2-status s-done">Done</span></div>
+                    <p class="p2-desc">Qwen3-8B, fine-tuned with SFT and then GRPO on the 1,000 investigator traces.
+                        We score how often it names both Evil players when each held-out game ends.</p>
+                    <div class="p2-bars">
+                        <div class="p2-row"><span>Base model</span><div class="p2-bar"><i style="--w:72%"></i></div><b>72.0%</b></div>
+                        <div class="p2-row"><span>SFT</span><div class="p2-bar"><i style="--w:84%"></i></div><b>84.0%</b></div>
+                        <div class="p2-row p2-hi"><span>SFT + GRPO</span><div class="p2-bar"><i style="--w:92%"></i></div><b>92.0%</b></div>
+                        <div class="p2-row p2-gold"><span>Gold traces</span><div class="p2-bar"><i style="--w:92%"></i></div><b>92.0%</b></div>
+                    </div>
+                    <p class="p2-note">25 held-out games. SFT + GRPO names both Evil players in 23 of 25 games, the same
+                        as the gold traces. One H100 GPU, 28 GPU-hours.</p>
+                </div>
+
+                <div class="p2-card p2-c-iaa">
+                    <div class="p2-head"><span class="p2-num">02</span><span class="p2-name">Inter-annotator agreement (IAA)</span><span class="p2-status s-ready">Sheet ready</span></div>
+                    <p class="p2-desc">Two annotators, blind to the true roles, score 100 reasoning traces from 25 games
+                        with the Stage 6 criteria. We report Cohen's κ and how well the LLM judge agrees with each
+                        annotator.</p>
+                    <div class="p2-sqs" id="p2Sqs" aria-hidden="true"></div>
+                    <div class="p2-legend"><span><i class="lg-r3"></i>Games ending in round 3 · 30 traces</span><span><i class="lg-r4"></i>Round 4 · 20</span><span><i class="lg-r5"></i>Round 5 · 50</span></div>
+                </div>
+
+                <div class="p2-card p2-c-xd">
+                    <div class="p2-head"><span class="p2-num">03</span><span class="p2-name">Cross-domain test</span><span class="p2-status s-plan">Planned</span></div>
+                    <p class="p2-desc">Does a detector trained on synthetic games work on real people? We test it on
+                        <b>InMind-Avalon</b>: 30 Avalon games played by humans.</p>
+                    <div class="p2-xd" aria-hidden="true">
+                        <div class="xd-side"><div class="xd-grid xd-syn"></div><span>AVCORP<br>250 synthetic games</span></div>
+                        <div class="xd-arrow"><i></i><em>transfer</em></div>
+                        <div class="xd-side"><div class="xd-grid xd-hum"></div><span>InMind-Avalon<br>30 human games</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>

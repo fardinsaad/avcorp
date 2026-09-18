@@ -1,0 +1,76 @@
+<section id="traceqc">
+        <div class="wrap">
+            <div class="sh">
+                <div class="sh-label">Quality Control</div>
+                <div class="sh-title">Stage 6: Blind Trace Verification</div>
+                <div class="sh-sub">Claude Sonnet 4.6 scores Trace A and Trace B on four pass or fail criteria without
+                    knowing which framework wrote which. It also sees the true roles, which it uses to break ties.</div>
+            </div>
+
+            <div class="q6-crit">
+                <div class="q6-c"><span class="q6-n">C1</span><b>Abduction Plausibility</b><p>Every hypothesis cites a
+                        specific game event.</p></div>
+                <div class="q6-c"><span class="q6-n">C2</span><b>Suspicion Consistency</b><p>Suspicion matches the
+                        evidence so far and obeys the Definitive Deduction Rule.</p></div>
+                <div class="q6-c"><span class="q6-n">C3</span><b>Gated Depth Reasoning</b><p>First-order beliefs for all
+                        players; second-order only for Strong or Extreme suspects.</p></div>
+                <div class="q6-c"><span class="q6-n">C4</span><b>Statement and Deduction</b><p>The utterance rests on
+                        evidence, and the deduction names every high-suspicion player.</p></div>
+            </div>
+
+            <div class="q6-tabs" role="tablist" aria-label="Stage 6 results">
+                <button class="q6-t on" role="tab" aria-selected="true" data-tab="0" type="button">Pass rates</button>
+                <button class="q6-t" role="tab" aria-selected="false" data-tab="1" type="button">How pairs were decided</button>
+                <button class="q6-t" role="tab" aria-selected="false" data-tab="2" type="button">Which trace was kept</button>
+                <span class="q6-n-all">N = 1,000 traces per framework</span>
+            </div>
+
+            <div class="q6-views">
+                <div class="q6-v on" role="tabpanel" data-view="0">
+                    <div class="q6-legend"><span class="lg-react">ReAct</span><span class="lg-recon">ReCon</span></div>
+                    <div class="q6-bars">
+                        <div class="q6-row"><span>C1 Abduction</span><div class="q6-pair"><i class="b-react" style="--w:97.6%"><em>97.6</em></i><i class="b-recon" style="--w:93.7%"><em>93.7</em></i></div></div>
+                        <div class="q6-row"><span>C2 Suspicion</span><div class="q6-pair"><i class="b-react" style="--w:94.3%"><em>94.3</em></i><i class="b-recon" style="--w:89.1%"><em>89.1</em></i></div></div>
+                        <div class="q6-row"><span>C3 Gated depth</span><div class="q6-pair"><i class="b-react" style="--w:100%"><em>100.0</em></i><i class="b-recon" style="--w:99.9%"><em>99.9</em></i></div></div>
+                        <div class="q6-row"><span>C4 Deduction</span><div class="q6-pair"><i class="b-react" style="--w:99.3%"><em>99.3</em></i><i class="b-recon" style="--w:98.2%"><em>98.2</em></i></div></div>
+                        <div class="q6-row q6-all"><span>All four (4/4)</span><div class="q6-pair"><i class="b-react" style="--w:92.5%"><em>92.5</em></i><i class="b-recon" style="--w:84.4%"><em>84.4</em></i></div></div>
+                    </div>
+                    <p class="q6-cap">ReAct passes more criteria: a mean score of 3.91 out of 4, against 3.81 for ReCon.</p>
+                </div>
+
+                <div class="q6-v" role="tabpanel" data-view="1">
+                    <div class="q6-stack">
+                        <i class="st-tie" style="--w:79.1%"><b>79.1%</b><span>Both 4/4</span></i>
+                        <i class="st-one" style="--w:18.7%"><b>18.7%</b><span>One 4/4</span></i>
+                        <i class="st-fix" style="--w:2.2%"><b></b></i>
+                    </div>
+                    <div class="q6-keys">
+                        <div><i class="k-tie"></i><b>Pairwise tiebreak</b>Both traces score 4/4, so the judge keeps the one
+                            closer to the true roles.</div>
+                        <div><i class="k-one"></i><b>Direct selection</b>Only one trace scores 4/4, and it is kept.</div>
+                        <div><i class="k-fix"></i><b>Targeted correction · 2.2%</b>Both score below 4/4, so the stronger
+                            trace is corrected (22 traces). All resolve within three rechecks.</div>
+                    </div>
+                </div>
+
+                <div class="q6-v" role="tabpanel" data-view="2">
+                    <div class="q6-sel">
+                        <div class="q6-srow"><span>ReCon</span><div class="q6-sbar"><i class="s-dir" style="--w:63.9%"></i><i class="s-cor" style="--w:1.6%"></i></div><b>65.5%</b></div>
+                        <div class="q6-srow"><span>ReAct</span><div class="q6-sbar"><i class="s-dir" style="--w:33.9%"></i><i class="s-cor" style="--w:0.6%"></i></div><b>34.5%</b></div>
+                        <div class="q6-skey"><span><i class="s-dir"></i>Kept as written</span><span><i class="s-cor"></i>Kept after correction</span></div>
+                    </div>
+                    <div class="q6-insight"><b>Why the judge prefers ReCon.</b> ReAct passes more criteria, but most
+                        pairs tie at 4/4. The tiebreak then favors ReCon, whose traces sit closer to the true roles.</div>
+                </div>
+            </div>
+
+            <div class="q6-logic">
+                <div class="q6-l"><span>Layer 1</span><b>Select or correct</b><p>Tie at 4/4: keep the trace closer to the
+                        true roles. One at 4/4: keep it. Neither: correct the stronger trace.</p></div>
+                <div class="q6-l"><span>Layer 2</span><b>Recheck</b><p>A corrected trace is rechecked up to three times
+                        before it is flagged.</p></div>
+                <div class="q6-l"><span>Human review</span><b>People in the loop</b><p>At least 50 sampled corrected traces
+                        and every flagged trace are read by hand; prompts and criteria are refined from them.</p></div>
+            </div>
+        </div>
+    </section>

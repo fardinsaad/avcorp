@@ -1,0 +1,124 @@
+<section id="dataset">
+        <div class="wrap">
+            <div class="sh">
+                <div class="sh-label">Dataset Anatomy</div>
+                <div class="sh-title">Avalon Game Loop → Dataset Columns</div>
+                <div class="sh-sub">Each round of play fills the 10 columns of the CSV. Step through one round to see
+                    which step writes which column.</div>
+            </div>
+
+            <div class="dl-bar">
+                <button class="dl-btn dl-next" id="dlNext" type="button">Start the round <i>▸</i></button>
+                <button class="dl-btn dl-all" id="dlAll" type="button">Play all</button>
+                <button class="dl-btn dl-reset" id="dlReset" type="button">↺ Reset</button>
+                <div class="dl-meter" aria-live="polite"><b id="dlCount">0</b> / 10 columns filled</div>
+            </div>
+
+            <div class="game-loop dl-loop" id="dlLoop">
+                <div class="gl-phase dl-step" data-cols="player_roles role_id llm_alignment">
+                    <div class="gl-phase-head">
+                        <span class="gl-phase-n">01</span>
+                        <span class="gl-phase-name">Team Selection</span>
+                    </div>
+                    <p class="gl-phase-desc">The leader proposes a quest team. Each player knows only their own role;
+                        Evil players must appear cooperative.</p>
+                    <div class="gl-cols">
+                        <code>player_roles</code>
+                        <code>role_id</code>
+                        <code>llm_alignment</code>
+                    </div>
+                    <div class="gl-sample">
+                        <pre>{"P1":"Good","P2":"Good",
+"P3":"Evil","P4":"Evil",
+"P5":"Good"}</pre>
+                    </div>
+                </div>
+
+                <div class="dl-arrow" aria-hidden="true"><span class="dl-line"><i></i></span></div>
+
+                <div class="gl-phase dl-step" data-cols="public_history round_id game_id">
+                    <div class="gl-phase-head">
+                        <span class="gl-phase-n">02</span>
+                        <span class="gl-phase-name">Voting</span>
+                    </div>
+                    <p class="gl-phase-desc">All five players vote on the team. Votes are kept as evidence, but every
+                        proposal is accepted so each round reaches a quest.</p>
+                    <div class="gl-cols">
+                        <code>public_history</code>
+                        <code>round_id</code>
+                        <code>game_id</code>
+                    </div>
+                    <div class="gl-sample">
+                        <pre>Round 1 · Quest failed
+Team: P1, P4
+Votes: Approve×3 Reject×2</pre>
+                    </div>
+                </div>
+
+                <div class="dl-arrow" aria-hidden="true"><span class="dl-line"><i></i></span></div>
+
+                <div class="gl-phase dl-step" data-cols="public_history prior_summary_gold">
+                    <div class="gl-phase-head">
+                        <span class="gl-phase-n">03</span>
+                        <span class="gl-phase-name">Quest Execution</span>
+                    </div>
+                    <p class="gl-phase-desc">Team members secretly play Pass or Fail. One Fail card is enough to fail
+                        the quest.</p>
+                    <div class="gl-cols">
+                        <code>public_history</code>
+                        <code>prior_summary_gold</code>
+                    </div>
+                    <div class="gl-sample">
+                        <pre>Quest 1 result: FAIL
+Fail cards played: 1
+Round summary appended</pre>
+                    </div>
+                </div>
+
+                <div class="dl-arrow" aria-hidden="true"><span class="dl-line"><i></i></span></div>
+
+                <div class="gl-phase gl-phase-hi dl-step" data-cols="discussion_log matrix_tactic_scale reasoning_gold">
+                    <div class="gl-phase-head">
+                        <span class="gl-phase-n">04</span>
+                        <span class="gl-phase-name">Discussion</span>
+                    </div>
+                    <p class="gl-phase-desc">Open discussion follows each quest. Deception, blame-shifting, and
+                        alliances appear here.</p>
+                    <div class="gl-cols">
+                        <code>discussion_log</code>
+                        <code>matrix_tactic_scale</code>
+                        <code>reasoning_gold</code>
+                    </div>
+                    <div class="gl-sample">
+                        <pre>P3: "I think P1, P4, and I
+  would make a great team"
+P4: "It was obviously P1
+  who failed the quest"</pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-grid dl-grid" id="dlGrid">
+                <div class="col-item ci-meta" data-col="game_id"><code>game_id</code><span>Unique game identifier
+                        (G001 to G250)</span></div>
+                <div class="col-item ci-meta" data-col="round_id"><code>round_id</code><span>Round within the game (1 to
+                        5)</span></div>
+                <div class="col-item ci-meta" data-col="role_id"><code>role_id</code><span>Annotated player (P1 to
+                        P5)</span></div>
+                <div class="col-item ci-meta" data-col="llm_alignment"><code>llm_alignment</code><span>Player alignment:
+                        Good or Evil</span></div>
+                <div class="col-item ci-game" data-col="player_roles"><code>player_roles</code><span>JSON map of every
+                        player's role</span></div>
+                <div class="col-item ci-game" data-col="public_history"><code>public_history</code><span>Team proposals,
+                        votes, and quest outcomes</span></div>
+                <div class="col-item ci-game" data-col="prior_summary_gold"><code>prior_summary_gold</code><span>Gold
+                        summary of all earlier rounds</span></div>
+                <div class="col-item ci-annot" data-col="discussion_log"><code>discussion_log</code><span>Post-quest
+                        utterances, one per player</span></div>
+                <div class="col-item ci-annot" data-col="matrix_tactic_scale"><code>matrix_tactic_scale</code><span>Per
+                        player: row, column, tactic, scale, level</span></div>
+                <div class="col-item ci-annot" data-col="reasoning_gold"><code>reasoning_gold</code><span>ToM trace:
+                        abduction, suspicion, beliefs, deduction</span></div>
+            </div>
+        </div>
+    </section>

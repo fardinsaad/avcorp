@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AVCORP — Scaffolding Pipeline Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/sections.css">
+    <link rel="stylesheet" href="css/interact.css">
+    <script>document.documentElement.classList.add('js');if(matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('rm');</script>
+    <script>(function(){try{var t=localStorage.getItem('avcorp-theme');document.documentElement.dataset.theme=['midnight','obsidian','abyss','plum'].indexOf(t)>-1?t:'midnight';}catch(e){document.documentElement.dataset.theme='midnight';}})();</script>
+</head>
+
+<body>
+
+    <canvas id="neuro" aria-hidden="true"></canvas>
+
+    <!-- ===== NAV (inline — renders instantly, no fetch delay) ===== -->
+    <nav>
+        <div class="nav-inner">
+            <span class="nav-brand">AVCORP</span>
+            <div class="nav-links">
+                <a href="#motivation">Motivation</a>
+                <a href="#pipeline">Architecture</a>
+                <a href="#dataset">Dataset</a>
+                <a href="#theory">Theory</a>
+                <a href="#genflow">Gen &amp; Verify</a>
+                <a href="#trace">Trace</a>
+                <a href="#scale">Phases</a>
+            </div>
+            <div class="theme-pick" role="group" aria-label="Colour theme">
+                <span class="theme-pick-l">Theme</span>
+                <button class="tsw tsw-midnight" data-theme="midnight" type="button" title="Midnight" aria-label="Midnight theme" aria-pressed="true"></button>
+                <button class="tsw tsw-plum" data-theme="plum" type="button" title="Plum" aria-label="Plum theme" aria-pressed="false"></button>
+                <button class="tsw tsw-obsidian" data-theme="obsidian" type="button" title="Obsidian" aria-label="Obsidian theme" aria-pressed="false"></button>
+                <button class="tsw tsw-abyss" data-theme="abyss" type="button" title="Abyss" aria-label="Abyss theme" aria-pressed="false"></button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== BODY SKELETON
+         Each slot is replaced with its component on DOMContentLoaded.
+         The <div> placeholders are never visible to the user. ===== -->
+    <div data-component="components/hero.html"></div>
+    <div data-component="components/motivation.html"></div>
+    <div data-component="components/pipeline.html"></div>
+    <div data-component="components/dataset.html"></div>
+    <div data-component="components/theory.html"></div>
+    <div data-component="components/matrix.html"></div>
+    <div data-component="components/genflow.html"></div>
+    <div data-component="components/verify.html"></div>
+    <div data-component="components/trace.html"></div>
+    <div data-component="components/traceqc.html"></div>
+    <div data-component="components/tom.html"></div>
+    <div data-component="components/scale.html"></div>
+
+    <!-- ===== FOOTER (inline — always present) ===== -->
+<footer>
+        <div class="wrap">
+            <div class="footer-text">AVCORP · NCSU + Collaborators · 2026 · <em>Combatting Deception</em>
+            </div>
+            <div class="model-row">
+                <span class="model-pill"><span class="mp-dot" style="background:#6366f1"></span> GPT-5.2 — Pass 1 &amp;
+                    Pass 2</span>
+                <span class="model-pill"><span class="mp-dot" style="background:#14b8a6"></span> Gemini-3.1 — Pass
+                    2</span>
+                <span class="model-pill"><span class="mp-dot" style="background:#a78bfa"></span> Claude Sonnet 4.5 —
+                    Verification</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/motivation.js" defer></script>
+    <script src="js/interact.js" defer></script>
+    <script src="js/sections.js" defer></script>
+    <script src="js/main.js" defer></script>
+
+</body>
+
+</html>

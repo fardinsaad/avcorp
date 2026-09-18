@@ -1,0 +1,162 @@
+<section id="genflow">
+        <div class="wrap">
+            <div class="sh">
+                <div class="sh-label">Stage 3 &amp; 4 — Deep Dive</div>
+                <div class="sh-title">Two-Pass Generation + Blind Verification</div>
+                <div class="sh-sub">Hover any node to reveal details. The correction loop re-runs up to 3 times before
+                    escalation.</div>
+            </div>
+
+            <div class="gf-label">Stage 3 — Dialogue Generation</div>
+            <div class="gf-row">
+                <div class="gf-node">
+                    <div class="gf-node-body">
+                        <span class="gf-icon">📄</span>
+                        <span class="gf-name">Game Context</span>
+                        <span class="gf-sub">Seed + History</span>
+                    </div>
+                    <div class="gf-detail">
+                        <strong>Input Data</strong>
+                        <p>Game seeds from Stage 1 + public history from Stage 2. Includes player roles, quest outcomes,
+                            and vote records from all prior rounds.</p>
+                        <code>game_id · round_id · player_roles · public_history · prior_summary_gold</code>
+                    </div>
+                </div>
+
+                <div class="gf-arrow">→</div>
+
+                <div class="gf-node">
+                    <div class="gf-node-body">
+                        <span class="gf-icon">🧠</span>
+                        <span class="gf-name">Pass 1: GPT-5.2</span>
+                        <span class="gf-sub">Tactic Precompute</span>
+                    </div>
+                    <div class="gf-detail">
+                        <strong>Tactic Assignment (Pass 1)</strong>
+                        <p>GPT-5.2 selects a tactic from the 37-tactic 4×4 matrix for each player, guided by role,
+                            history, and game context.</p>
+                        <code>matrix_tactic_scale ← {row, col, tactic, scale, level}</code>
+                    </div>
+                </div>
+
+                <div class="gf-arrow">→</div>
+
+                <div class="gf-node">
+                    <div class="gf-node-body">
+                        <span class="gf-icon">💬</span>
+                        <span class="gf-name">Pass 2: Dual Gen</span>
+                        <span class="gf-sub">GPT-5.2 + Gemini-3.1</span>
+                    </div>
+                    <div class="gf-detail">
+                        <strong>Parallel Dialogue Generation (Pass 2)</strong>
+                        <p>Two models independently generate the discussion log, guided by the tactic pre-assigned in
+                            Pass 1.</p>
+                        <div class="gf-split-row">
+                            <div class="gf-split-item"><span>GPT-5.2</span><span>→ Response A</span></div>
+                            <div class="gf-split-item"><span>Gemini-3.1</span><span>→ Response B</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gf-arrow">→</div>
+
+                <div class="gf-node gf-output">
+                    <div class="gf-node-body">
+                        <span class="gf-icon">📊</span>
+                        <span class="gf-name">Seeds CSV A &amp; B</span>
+                        <span class="gf-sub">2 candidates/row</span>
+                    </div>
+                    <div class="gf-detail">
+                        <strong>Generation Output Files</strong>
+                        <p>Each game×round×role produces two candidate dialogues, one per model.</p>
+                        <code>generated_r3_seeds_gemini3.csv</code>
+                        <code>generated_r3_seeds_gpt5_2.csv</code>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gf-connector-vert">↓</div>
+
+            <div class="gf-label">Stage 4 — Blind Verification</div>
+            <div class="gf-row">
+                <div class="gf-node">
+                    <div class="gf-node-body">
+                        <span class="gf-icon">🎭</span>
+                        <span class="gf-name">Blind Inputs</span>
+                        <span class="gf-sub">Response A · Response B</span>
+                    </div>
+                    <div class="gf-detail">
+                        <strong>Blind Setup</strong>
+                        <p>Verifier receives both responses with model labels removed — anonymized as "Response A" and
+                            "Response B" to eliminate model-name bias.</p>
+                    </div>
+                </div>
+
+                <div class="gf-arrow">→</div>
+
+                <div class="gf-node gf-node-verify">
+                    <div class="gf-node-body">
+                        <span class="gf-icon">🔍</span>
+                        <span class="gf-name">Claude Sonnet 4.5</span>
+                        <span class="gf-sub">Blind Scorer</span>
+                    </div>
+                    <div class="gf-detail">
+                        <strong>5-Criteria Binary Scoring</strong>
+                        <p>Each criterion scored pass/fail for each response:</p>
+                        <ul>
+                            <li>Situational coherence &amp; tactic fit</li>
+                            <li>Public history alignment</li>
+                            <li>Tactic–dialogue alignment</li>
+                            <li>Authenticity &amp; skill level match</li>
+                            <li>Format compliance</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="gf-arrow">→</div>
+
+                <div class="gf-node gf-node-decision">
+                    <div class="gf-node-body">
+                        <span class="gf-icon">⚖️</span>
+                        <span class="gf-name">Decision Logic</span>
+                        <span class="gf-sub">Score A vs Score B</span>
+                    </div>
+                    <div class="gf-detail">
+                        <strong>Selection Rules</strong>
+                        <ul class="gf-rules">
+                            <li><span class="rule-tag rt-green">5/5 &amp; 5/5</span>Pairwise: select richer response
+                            </li>
+                            <li><span class="rule-tag rt-green">5/5 &amp; &lt;5</span>Use the 5/5 directly</li>
+                            <li><span class="rule-tag rt-amber">4/5</span>Targeted correction of failing criterion</li>
+                            <li><span class="rule-tag rt-red">≤3/5</span>Full regeneration pass</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="gf-arrow">→</div>
+
+                <div class="gf-node gf-node-final">
+                    <div class="gf-node-body">
+                        <span class="gf-icon">✓</span>
+                        <span class="gf-name">Verified Output</span>
+                        <span class="gf-sub">verified/</span>
+                    </div>
+                    <div class="gf-detail">
+                        <strong>Final Dataset Row</strong>
+                        <p>Verified dialogue and tactic annotations merged into the master dataset.</p>
+                        <code>verified_r3_seeds_combined.csv</code>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gf-loop">
+                <div class="gf-loop-inner">
+                    <span class="gf-loop-icon">↺</span>
+                    <span class="gf-loop-text"><strong style="color:var(--amber)">Correction loop — max 3
+                            attempts:</strong> If decision logic triggers correction (4/5) or regeneration (≤3/5), the
+                        revised response re-enters the blind verifier. The loop terminates after 3 attempts regardless
+                        of outcome.</span>
+                </div>
+            </div>
+        </div>
+    </section>

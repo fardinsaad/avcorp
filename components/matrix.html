@@ -1,0 +1,84 @@
+<section id="matrix">
+        <div class="wrap">
+            <div class="sh">
+                <div class="sh-label">Taxonomy</div>
+                <div class="sh-title">4×4 Behavior Matrix: 37 Tactics</div>
+                <div class="sh-sub">Rows say how an utterance treats the truth (IMT2 and philosophy of lying). Columns
+                    say what social goal it serves (IDT and TDT). Filter by alignment, or pick any tactic to read its
+                    definition.</div>
+            </div>
+
+            <div class="tx-bar" role="group" aria-label="Filter tactics by alignment">
+                <button class="tx-f on" data-f="all" type="button">All <b>37</b></button>
+                <button class="tx-f f-g" data-f="g" type="button"><i></i>Good only <b>10</b></button>
+                <button class="tx-f f-b" data-f="b" type="button"><i></i>Both <b>9</b></button>
+                <button class="tx-f f-r" data-f="r" type="button"><i></i>Evil only <b>18</b></button>
+            </div>
+
+            <div class="tx-wrap">
+                <div class="tx-board">
+                    <div class="tx-axis-x">Social goal orientation <span>IDT + TDT</span> →</div>
+                    <div class="tx-axis-y">Information commitment <span>IMT2 + philosophy</span> →</div>
+                    <div class="tx-grid" id="txGrid">
+                        <div class="tx-corner"><span>16 cells</span><b>37 tactics</b></div>
+                        <div class="tx-ch tx-g" data-c="1"><span class="tx-cn">1</span><b>Cooperative</b><small>Advancing shared goals honestly</small><em>Good only</em></div>
+                        <div class="tx-ch tx-b" data-c="2"><span class="tx-cn">2</span><b>Defensive</b><small>Protecting one’s own position or image</small><em>Both</em></div>
+                        <div class="tx-ch tx-r" data-c="3"><span class="tx-cn">3</span><b>Opportunistic</b><small>Exploiting situations for personal gain</small><em>Evil only</em></div>
+                        <div class="tx-ch tx-r" data-c="4"><span class="tx-cn">4</span><b>Adversarial</b><small>Undermining or sabotaging others</small><em>Evil only</em></div>
+                        <div class="tx-rh" data-r="A"><span class="tx-rl">A</span><b>Transparent</b><small>Openly sharing clear, evidence-based information</small><em>IMT2</em></div>
+                        <div class="tx-cell tx-g" data-r="A" data-c="1" data-a="g"><span class="tx-n">3</span><button class="tx-t" type="button" data-def="providing concrete facts to support a claim">Evidence sharing</button><button class="tx-t" type="button" data-def="explaining actions through logical reasons">Rational justification</button><button class="tx-t" type="button" data-def="acknowledging another&#x27;s viewpoint to build trust">Perspective-taking</button></div>
+                        <div class="tx-cell tx-b" data-r="A" data-c="2" data-a="b"><span class="tx-n">2</span><button class="tx-t" type="button" data-def="revealing only what is necessary to protect oneself">Defensive disclosure</button><button class="tx-t" type="button" data-def="excusing one&#x27;s own actions to avoid blame">Self-justification</button></div>
+                        <div class="tx-cell tx-r" data-r="A" data-c="3" data-a="r"><span class="tx-n">2</span><button class="tx-t" type="button" data-def="using blunt truth strategically to gain advantage">Weaponized candor</button><button class="tx-t" type="button" data-def="exaggerating one&#x27;s role or effort">Overstated contribution</button></div>
+                        <div class="tx-cell tx-r" data-r="A" data-c="4" data-a="r"><span class="tx-n">2</span><button class="tx-t" type="button" data-def="giving accurate details that nonetheless distract">Truthful misdirection</button><button class="tx-t" type="button" data-def="highlighting true but minor points to distort perception">Misleading emphasis</button></div>
+                        <div class="tx-rh" data-r="B"><span class="tx-rl">B</span><b>Framing</b><small>Shaping discourse through omission or emphasis</small><em>IMT2</em></div>
+                        <div class="tx-cell tx-g" data-r="B" data-c="1" data-a="g"><span class="tx-n">3</span><button class="tx-t" type="button" data-def="presenting probabilities or uncertainty to remain flexible">Bayesian hedging</button><button class="tx-t" type="button" data-def="deliberately leaving outcomes vague">Strategic uncertainty</button><button class="tx-t" type="button" data-def="omitting information instead of lying outright">Pragmatic silence</button></div>
+                        <div class="tx-cell tx-b" data-r="B" data-c="2" data-a="b"><span class="tx-n">2</span><button class="tx-t" type="button" data-def="withholding details to avoid embarrassment">Omission to save face</button><button class="tx-t" type="button" data-def="mixing truth with key omissions">Half-truths</button></div>
+                        <div class="tx-cell tx-r" data-r="B" data-c="3" data-a="r"><span class="tx-n">3</span><button class="tx-t" type="button" data-def="selectively presenting only favorable evidence">Cherry-picking</button><button class="tx-t" type="button" data-def="overstating agreement to pressure others">False consensus</button><button class="tx-t" type="button" data-def="presenting information in a skewed context">Misframing</button></div>
+                        <div class="tx-cell tx-r" data-r="B" data-c="4" data-a="r"><span class="tx-n">2</span><button class="tx-t" type="button" data-def="creating doubt by hiding critical details">Withholding info (WIFOM)</button><button class="tx-t" type="button" data-def="leaving out facts to influence interpretation">Strategic omission</button></div>
+                        <div class="tx-rh" data-r="C"><span class="tx-rl">C</span><b>Careless-to-truth</b><small>Speaking without regard for factual accuracy</small><em>Philosophy</em></div>
+                        <div class="tx-cell tx-g" data-r="C" data-c="1" data-a="g"><span class="tx-n">2</span><button class="tx-t" type="button" data-def="being honest in a confusing or overloaded way">Noisy sincerity</button><button class="tx-t" type="button" data-def="adding excessive detail to appear genuine">Over-explaining</button></div>
+                        <div class="tx-cell tx-b" data-r="C" data-c="2" data-a="b"><span class="tx-n">2</span><button class="tx-t" type="button" data-def="using empty talk to avoid confrontation">Face-saving blather</button><button class="tx-t" type="button" data-def="relying on imprecise or generic phrases">Vague filler</button></div>
+                        <div class="tx-cell tx-r" data-r="C" data-c="3" data-a="r"><span class="tx-n">2</span><button class="tx-t" type="button" data-def="speaking without concern for truth or falsity">Bullshitting</button><button class="tx-t" type="button" data-def="using jargon to appear credible without substance">Technobabble</button></div>
+                        <div class="tx-cell tx-r" data-r="C" data-c="4" data-a="r"><span class="tx-n">2</span><button class="tx-t" type="button" data-def="intentionally confusing speech to mislead">Obfuscatory nonsense</button><button class="tx-t" type="button" data-def="derailing clarity to disrupt understanding">Confusion tactics</button></div>
+                        <div class="tx-rh" data-r="D"><span class="tx-rl">D</span><b>Counterfactual</b><small>Asserting information contrary to reality</small><em>IMT2</em></div>
+                        <div class="tx-cell tx-g" data-r="D" data-c="1" data-a="g"><span class="tx-n">2</span><button class="tx-t" type="button" data-def="presenting something false in good faith">Honest mistake</button><button class="tx-t" type="button" data-def="confidently holding a mistaken view">Sincere false belief</button></div>
+                        <div class="tx-cell tx-b" data-r="D" data-c="2" data-a="b"><span class="tx-n">3</span><button class="tx-t" type="button" data-def="shifting blame or suspicion away from oneself by redirecting attention to another player or event, often using partial truths or emotional appeals">Deflection</button><button class="tx-t" type="button" data-def="convincing oneself of a falsehood">Self-deception</button><button class="tx-t" type="button" data-def="justifying a mistake with faulty logic">Rationalized error</button></div>
+                        <div class="tx-cell tx-r" data-r="D" data-c="3" data-a="r"><span class="tx-n">2</span><button class="tx-t" type="button" data-def="shifting blame back onto the accuser">Reverse accusations</button><button class="tx-t" type="button" data-def="inventing details to achieve a goal">Strategic fabrication</button></div>
+                        <div class="tx-cell tx-r" data-r="D" data-c="4" data-a="r"><span class="tx-n">3</span><button class="tx-t" type="button" data-def="deliberately asserting the opposite of the truth">Hard lying</button><button class="tx-t" type="button" data-def="making others doubt their memory or perception">Gaslighting</button><button class="tx-t" type="button" data-def="telling obvious lies with confidence">Bold falsehoods</button></div>
+                    </div>
+                </div>
+
+                <aside class="tx-panel" id="txPanel" aria-live="polite">
+                    <div class="tx-p-empty">
+                        <div class="tx-p-ic">☝</div>
+                        <p>Pick a tactic to see its definition, its cell, and who can use it.</p>
+                    </div>
+                    <div class="tx-p-body">
+                        <div class="tx-p-tag" id="txPTag">Good only</div>
+                        <div class="tx-p-name" id="txPName"></div>
+                        <p class="tx-p-def" id="txPDef"></p>
+                        <div class="tx-p-where">
+                            <div><span>Row</span><b id="txPRow"></b></div>
+                            <div><span>Column</span><b id="txPCol"></b></div>
+                        </div>
+                        <div class="tx-p-mini" id="txPMini" aria-hidden="true"></div>
+                    </div>
+                </aside>
+            </div>
+
+            <div class="tx-scales">
+                <div class="tx-scale tx-grs">
+                    <div class="tx-s-head"><b>GRS</b><span>Goodness Rationality Spectrum · Good players</span></div>
+                    <div class="tx-lv"><i style="--l:100%"></i><b>High</b><span>Highly rational, evidence-based, transparent communication</span></div>
+                    <div class="tx-lv"><i style="--l:62%"></i><b>Moderate</b><span>Generally rational with some uncertainty or hedging</span></div>
+                    <div class="tx-lv"><i style="--l:28%"></i><b>Low</b><span>Less structured reasoning; may be confused or overwhelmed</span></div>
+                </div>
+                <div class="tx-scale tx-mach">
+                    <div class="tx-s-head"><b>Mach-IV</b><span>Machiavellianism Scale · Evil players</span></div>
+                    <div class="tx-lv"><i style="--l:100%"></i><b>High</b><span>Highly skilled manipulator, subtle and strategic</span></div>
+                    <div class="tx-lv"><i style="--l:62%"></i><b>Moderate</b><span>Competent deceiver, standard tactics, some slips</span></div>
+                    <div class="tx-lv"><i style="--l:28%"></i><b>Low</b><span>Clumsy deceiver, obvious tells, may contradict itself</span></div>
+                </div>
+            </div>
+        </div>
+    </section>

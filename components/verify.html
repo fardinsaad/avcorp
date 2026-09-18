@@ -1,0 +1,86 @@
+<section id="verify">
+        <div class="wrap">
+            <div class="sh">
+                <div class="sh-label">Quality Control</div>
+                <div class="sh-title">Stage 4: Multicriteria Blind Verification</div>
+                <div class="sh-sub">Claude Sonnet 4.5 evaluates both generator outputs (GPT-5.2 vs Gemini-3.1)
+                    independently using anonymized labels (Response A / B), eliminating model-name bias</div>
+            </div>
+
+            <div class="crit-grid">
+                <div class="crit-card">
+                    <div class="crit-num">①</div>
+                    <div class="crit-title">Coherence &amp; Situational Fit</div>
+                    <div class="crit-desc">Tactic makes social sense given the conversational dynamics — plausible for
+                        that specific Avalon moment, not just a literal label match.</div>
+                </div>
+                <div class="crit-card">
+                    <div class="crit-num">②</div>
+                    <div class="crit-title">Public History Alignment</div>
+                    <div class="crit-desc">Dialogue references appropriate context: teams, voting outcomes, and quest
+                        results from all prior rounds.</div>
+                </div>
+                <div class="crit-card">
+                    <div class="crit-num">③</div>
+                    <div class="crit-title">Tactic–Dialogue Alignment</div>
+                    <div class="crit-desc">Annotation must describe what was actually written. Dialogue is ground truth
+                        — the matrix annotation must match the utterance, not the pre-plan.</div>
+                </div>
+                <div class="crit-card">
+                    <div class="crit-num">④</div>
+                    <div class="crit-title">Authenticity &amp; Skill</div>
+                    <div class="crit-desc">Utterances read as believable Avalon dialogue. Linguistic sophistication
+                        matches the assigned GRS or Mach-IV level.</div>
+                </div>
+                <div class="crit-card">
+                    <div class="crit-num">⑤</div>
+                    <div class="crit-title">Format Compliance</div>
+                    <div class="crit-desc">Exactly 4 speakers, protagonist excluded, proper dialogue format and valid
+                        JSON matrix schema.</div>
+                </div>
+            </div>
+
+            <div class="vs-sim" id="vsSim">
+                <div class="vs-head">
+                    <div class="vs-title">Try the decision logic</div>
+                    <div class="vs-pick" role="group" aria-label="Pick a scoring case">
+                        <button class="vs-b" type="button" data-case="0">Both perfect</button>
+                        <button class="vs-b" type="button" data-case="1">One perfect</button>
+                        <button class="vs-b" type="button" data-case="2">Best is 4/5</button>
+                        <button class="vs-b" type="button" data-case="3">Both 3/5 or less</button>
+                    </div>
+                </div>
+                <div class="vs-body">
+                    <div class="vs-card" data-who="A"><div class="vs-name">Response A <span>blind</span></div><div class="vs-ticks"></div><div class="vs-score">?/5</div></div>
+                    <div class="vs-card" data-who="B"><div class="vs-name">Response B <span>blind</span></div><div class="vs-ticks"></div><div class="vs-score">?/5</div></div>
+                    <div class="vs-out"><span class="vs-arrow">→</span><div class="vs-verdict" aria-live="polite">Pick a case to see how the judge decides.</div></div>
+                </div>
+            </div>
+
+            <div style="margin-top:1.5rem" class="vs-logic">
+                <div
+                    style="font-size:.72rem;font-weight:700;color:var(--text-2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.9rem">
+                    Decision Logic</div>
+                <div class="decision-grid">
+                    <div class="dec-card g">
+                        <div class="dec-title">5/5 vs 5/5</div>
+                        <div class="dec-desc">Pairwise tiebreaker — Claude selects richer, more strategically nuanced
+                            dialogue</div>
+                    </div>
+                    <div class="dec-card g">
+                        <div class="dec-title">5/5 vs &lt;5/5</div>
+                        <div class="dec-desc">Use 5/5 response directly — no modification</div>
+                    </div>
+                    <div class="dec-card a">
+                        <div class="dec-title">4/5 vs &lt;4/5</div>
+                        <div class="dec-desc">Targeted correction of 4/5 response, fixing only the failing criterion
+                        </div>
+                    </div>
+                    <div class="dec-card r">
+                        <div class="dec-title">≤3/5 vs ≤3/5</div>
+                        <div class="dec-desc">Claude Sonnet 4.5 generates entirely new dialogue from scratch</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>

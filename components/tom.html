@@ -1,0 +1,69 @@
+<section id="tom">
+        <div class="wrap">
+            <div class="sh">
+                <div class="sh-label">Schema</div>
+                <div class="sh-title">Theory of Mind Annotation Schema</div>
+                <div class="sh-sub">The <code style="font-size:.8em;color:var(--teal)">reasoning_gold</code> column
+                    encodes nested ToM inference: abductive hypotheses, suspicion calibration, belief hierarchies, and a
+                    final deduction over Evil players</div>
+            </div>
+
+            <div class="tom-schema" id="tomSchema">
+                <pre>
+<span class="punc">{</span>
+  <span class="key">"abduction"</span><span class="punc">: [</span>
+    <span class="punc">{</span>
+      <span class="key">"player"</span><span class="punc">:</span>    <span class="str">"P3"</span><span class="punc">,</span>
+      <span class="key">"good_expl"</span><span class="punc">:</span> <span class="str">"Proposes failed players again to test consistency."</span><span class="punc">,</span>
+      <span class="key">"evil_expl"</span><span class="punc">:</span> <span class="str">"Attempting to normalize failed players to protect an ally."</span><span class="punc">,</span>
+      <span class="key">"choice"</span><span class="punc">:</span>    <span class="str">"Evil"</span>   <span class="punc">// protagonist's current best hypothesis</span>
+    <span class="punc">}</span>   <span class="punc">// ... for each non-protagonist player</span>
+  <span class="punc">],</span>
+
+  <span class="key">"suspicion"</span><span class="punc">: [</span>
+    <span class="punc">{</span> <span class="key">"player"</span><span class="punc">:</span> <span class="str">"P2"</span><span class="punc">,</span> <span class="key">"level"</span><span class="punc">:</span> <span class="str">"Mild"</span>     <span class="punc">},</span>
+    <span class="punc">{</span> <span class="key">"player"</span><span class="punc">:</span> <span class="str">"P4"</span><span class="punc">,</span> <span class="key">"level"</span><span class="punc">:</span> <span class="str">"Extreme"</span>  <span class="punc">},</span>
+    <span class="punc">{</span> <span class="key">"player"</span><span class="punc">:</span> <span class="str">"P5"</span><span class="punc">,</span> <span class="key">"level"</span><span class="punc">:</span> <span class="str">"Minimal"</span>  <span class="punc">}</span>
+  <span class="punc">],</span>
+
+  <span class="key">"depth"</span><span class="punc">:</span> <span class="num">2</span><span class="punc">,</span>   <span class="punc">// 2 when any player is Strong or Extreme, else 1</span>
+
+  <span class="key">"beliefs"</span><span class="punc">: [</span>
+    <span class="punc">{</span>
+      <span class="key">"level"</span><span class="punc">:</span>   <span class="num">1</span><span class="punc">,</span>
+      <span class="key">"player"</span><span class="punc">:</span>  <span class="str">"P4"</span><span class="punc">,</span>
+      <span class="key">"content"</span><span class="punc">:</span> <span class="str">"Believes P1 caused the failure and claims personal innocence."</span>
+    <span class="punc">},</span>
+    <span class="punc">{</span>
+      <span class="key">"level"</span><span class="punc">:</span>   <span class="num">2</span><span class="punc">,</span>
+      <span class="key">"player"</span><span class="punc">:</span>  <span class="str">"P4"</span><span class="punc">,</span>
+      <span class="key">"content"</span><span class="punc">:</span> <span class="str">"Wants others to believe P1 failed — deflecting blame away from self."</span>
+    <span class="punc">}</span>
+  <span class="punc">],</span>
+
+  <span class="key">"statement"</span><span class="punc">:</span> <span class="str">"P4's immediate deflection toward P1 is consistent with survival-driven blame shifting."</span><span class="punc">,</span>
+  <span class="key">"deduction"</span><span class="punc">:</span> <span class="punc">[</span><span class="str">"P4"</span><span class="punc">]</span>   <span class="punc">// protagonist's suspected Evil players</span>
+<span class="punc">}</span>
+</pre>
+            </div>
+
+            <div
+                style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.75rem;margin-top:1rem">
+                <div class="dec-card g" style="background:rgba(20,184,166,.06);border-color:rgba(20,184,166,.2)">
+                    <div class="dec-title" style="color:var(--teal)">ReCon Prompting</div>
+                    <div class="dec-desc">Recursive Contemplation — iterative belief updating for higher-order ToM
+                        inference</div>
+                </div>
+                <div class="dec-card g" style="background:rgba(20,184,166,.06);border-color:rgba(20,184,166,.2)">
+                    <div class="dec-title" style="color:var(--teal)">ReAct Prompting</div>
+                    <div class="dec-desc">Reason + Act interleaving for step-by-step abductive hypothesis formation
+                    </div>
+                </div>
+                <div class="dec-card g" style="background:rgba(20,184,166,.06);border-color:rgba(20,184,166,.2)">
+                    <div class="dec-title" style="color:var(--teal)">Suspicion-Gated Depth</div>
+                    <div class="dec-desc">First-order beliefs for every player; second-order influence attribution only
+                        for Strong or Extreme suspects</div>
+                </div>
+            </div>
+        </div>
+    </section>

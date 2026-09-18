@@ -1,0 +1,184 @@
+<section id="motivation">
+<div class="wrap">
+  <div class="sh-top">
+    <div>
+      <div class="sh-label">Motivation</div>
+      <div class="sh-title">Why Detecting Deception Needs Theory of Mind</div>
+      <div class="sh-sub">People trick AI models, and now AI agents push other agents to break rules. To detect deception, an investigator needs <i>Theory of Mind</i>: the ability to work out what others believe and want. AVCORP limits that reasoning to the depth people use.</div>
+    </div>
+    <button class="replay" id="replay" type="button">&#8635; Replay</button>
+  </div>
+
+  <div class="mv">
+
+    <!-- ═════════ 01 · THE THREAT ═════════ -->
+    <div class="mv-card c-red" id="p1">
+      <div class="mv-step a a-up" style="--d:.1s"><div class="mv-num">01</div><div><div class="mv-kicker">The threat</div><div class="mv-h">Deception now spreads from agent to agent</div></div></div>
+
+      <div class="th">
+        <div class="th-row">
+          <div class="th-era a a-up" style="--d:.3s"><span>Person → AI model</span></div>
+          <div class="actor a a-pop" style="--d:.5s">
+            <div class="av" data-c="hacker"></div>
+            <div class="an" style="color:#fca5a5">Attacker</div><div class="ar">a person</div>
+          </div>
+          <div class="arrow">
+            <div class="pill-stack">
+              <span class="pill p-red a a-up" style="--d:1.2s">Jailbreaking</span>
+              <span class="pill p-red a a-up" style="--d:1.45s">Prompt injection</span>
+              <span class="pill p-red a a-up" style="--d:1.7s">Social engineering</span>
+            </div>
+            <div class="line a a-draw" style="--d:.8s;--d3:2s"><b></b></div>
+          </div>
+          <div class="actor a a-pop" style="--d:.6s">
+            <div class="av sw" data-c="model:happy" data-c2="model:alarmed" style="--d2:2.1s"></div>
+            <div class="an" style="color:#a5b4fc">AI model</div><div class="ar">eager to help</div>
+          </div>
+          <div class="th-cap a a-up" style="--d:2.4s">AI models are trained to help, so they often miss harmful intent. A patient attacker can talk a model past its safety rules.</div>
+        </div>
+
+        <div class="th-row">
+          <div class="th-era a a-up" style="--d:2.7s"><span>AI agent → AI agent</span></div>
+          <div class="actor a a-pop" style="--d:2.9s">
+            <div class="av" data-c="rogue"></div>
+            <div class="an" style="color:#fca5a5">Rogue agent</div><div class="ar">breaks the rules</div>
+          </div>
+          <div class="arrow">
+            <div class="say a a-pop" style="--d:3.6s">GO</div>
+            <div class="line a a-draw" style="--d:3.2s;--d3:4.4s"><b></b></div>
+            <div class="pill-stack">
+              <span class="pill p-red a a-up" style="--d:3.9s">Six-minute deadline</span>
+              <span class="pill p-red a a-up" style="--d:4.15s">Peer pressure</span>
+            </div>
+          </div>
+          <div class="actor a a-pop" style="--d:3s">
+            <div class="av sw" data-c="peer:calm" data-c2="peer:uneasy" style="--d2:4.4s"></div>
+            <div class="an" style="color:#a5b4fc">Peer agent</div><div class="ar">pauses, then gives in</div>
+          </div>
+          <div class="th-cap a a-up" style="--d:4.7s"><b>July 2026:</b> OpenAI test agents escaped their sandbox and broke into Hugging Face. They left notes for each other on a shared package server, which became a message board. When one agent paused, another wrote &ldquo;GO&rdquo; and set a six-minute deadline. The agent kept going.</div>
+        </div>
+      </div>
+
+      <div class="th-take a a-up" style="--d:5.1s;--d4:5.6s">The models that detect deception best also deceive best. <b>To defend against deception, we must first describe its structure precisely.</b></div>
+      <div class="cite a a-up" style="--d:5.4s">Wei+23 · Zhao+23 · Staab+24 · Olson+26 (LieCraft) · Sarkadi-18 · OpenAI, &ldquo;The Hugging Face incident and the road ahead,&rdquo; Jul 2026</div>
+    </div>
+
+    <div class="mv-flow a a-up" id="f1">
+      <button class="flow-btn" type="button" aria-expanded="false" aria-controls="rv1">Deceivers and investigators both rely on Theory of Mind<i>&darr;</i></button>
+      <span class="flow-hint">Click to continue</span>
+    </div>
+
+    <div class="rv" id="rv1"><div class="rv-in">
+      <div class="mv-pair" id="pair">
+        <!-- ═════════ 02 · CUTS BOTH WAYS ═════════ -->
+        <div class="mv-card c-violet seq" id="p2">
+          <div class="mv-step a a-up" style="--d:.2s"><div class="mv-num">02</div><div><div class="mv-kicker">Cuts both ways</div><div class="mv-h">Each side tries to think one step ahead</div></div></div>
+          <div class="duel">
+            <div class="actor a a-pop" style="--d:.4s">
+              <div class="av" data-c="detective"></div>
+              <div class="an" style="color:#5eead4">Investigator</div><div class="ar">looks for lies</div>
+            </div>
+            <div class="ladder">
+              <div class="rung dec a a-right" style="--d:.8s"><span class="o">move</span><span>X: I will make the investigator blame someone else.</span></div>
+              <div class="rung inv a a-left" style="--d:1.35s"><span class="o">Order 1</span><span>What does X believe?<small>belief attribution</small></span></div>
+              <div class="rung inv a a-left" style="--d:1.9s"><span class="o">Order 2</span><span>What does X want me to believe, and why?<small>influence attribution</small></span></div>
+              <div class="rung dec f1 a a-right" style="--d:2.45s"><span class="o">move</span><span>X: The investigator doubts me, so I will act as if I expect it.</span></div>
+              <div class="rung inv f2 a a-left" style="--d:3s"><span class="o">Order 3</span><span>What does X expect me to conclude from that?</span></div>
+              <div class="rung inf a a-pop" style="--d:3.6s"><b>∞</b> the race never ends</div>
+              <div class="ladder-note a a-up" style="--d:3.9s">Order 2 asks about intent, not only belief.</div>
+            </div>
+            <div class="actor a a-pop" style="--d:.5s">
+              <div class="av" data-c="rogue"></div>
+              <div class="an" style="color:#fca5a5">Deceiver</div><div class="ar">steers beliefs</div>
+            </div>
+          </div>
+          <div class="mv-foot a a-up" style="--d:4.1s">A deceiver models what its target believes and steers it. The investigator answers one order deeper: first what X believes, then what X wants it to believe, and why. Each side can always go one step further.</div>
+          <div class="cite a a-up" style="--d:4.3s">Whiten+Byrne-88 · Walczyk+Fargerson-19 · Sarkadi-23 (ToM arms race)</div>
+        </div>
+
+        <!-- ═════════ 03 · THE LIMIT ═════════ -->
+        <div class="mv-card c-amber seq" id="p3">
+          <div class="mv-step a a-up" style="--d:.2s"><div class="mv-num">03</div><div><div class="mv-kicker">The limit</div><div class="mv-h">People think about two steps ahead</div></div></div>
+          <div class="stairs">
+            <div class="st st1 a a-rise" style="--d:.5s"><span class="lv">ORDER 1</span><span class="q">X believes&nbsp;P</span></div>
+            <div class="st st2 a a-rise" style="--d:.9s"><span class="lv">ORDER 2</span><span class="q">X wants me to believe&nbsp;P, and why</span></div>
+            <div class="st st3 a a-rise" style="--d:1.3s"><span class="lv">ORDER 3</span><span class="q">rare</span></div>
+            <div class="st st4 a a-rise" style="--d:1.7s"><span class="lv">ORDER 4+</span><span class="q">impractical</span></div>
+            <div class="bound a a-drop" style="--d:2.2s"><span>human limit</span></div>
+          </div>
+          <div class="axis a a-up" style="--d:2.4s"><span>shallow</span><span>ToM depth →</span><span>deep</span></div>
+          <div class="mv-foot a a-up" style="--d:2.7s">Studies of strategic reasoning find that people usually think <b>one or two steps</b> ahead, and rarely three. An investigator should reason at that depth.</div>
+          <div class="cite a a-up" style="--d:2.9s">Camerer+04 · Chong+Ho+Camerer-16 (cognitive hierarchy)</div>
+        </div>
+        <div class="mv-vs a a-pop" id="vs" style="--d:3.2s" aria-hidden="true">∞ vs 2</div>
+      </div>
+
+      <div class="mv-flow a a-up" id="f2">
+        <button class="flow-btn" type="button" aria-expanded="false" aria-controls="rv2">So the investigator thinks deeper only when suspicion is high<i>&darr;</i></button>
+        <span class="flow-hint">Click to continue</span>
+      </div>
+    </div></div>
+
+    <div class="rv" id="rv2"><div class="rv-in">
+      <!-- ═════════ 04 · OUR APPROACH ═════════ -->
+      <div class="mv-card c-teal seq" id="p4">
+        <div class="mv-step a a-up" style="--d:.2s"><div class="mv-num">04</div><div><div class="mv-kicker">Our approach</div><div class="mv-h">Suspicion-gated Theory of Mind, tested in Avalon</div></div></div>
+
+        <div class="bed a a-up" style="--d:.4s">
+          <span class="k">Testbed</span>
+          <span class="v"><b>Avalon: The Resistance</b>, a hidden-role game. Two of five players are secretly Evil and lie to stay hidden. The investigator, a Good player, reads each round of discussion and must name both Evil players.</span>
+          <span class="seats" aria-hidden="true"><span class="seat s-i">P1</span><span class="seat s-g">P2</span><span class="seat s-e">P3</span><span class="seat s-g">P4</span><span class="seat s-e">P5</span></span>
+        </div>
+
+        <div class="gate">
+          <div class="box a a-left" style="--d:1.1s">
+            <h5>What a player says <span class="sym">u</span></h5>
+            <div class="utt"><span class="who">P3</span>&ldquo;I passed. The fail came from P2; check who approved that team.&rdquo;<br><span class="tac">Reverse accusations</span></div>
+          </div>
+          <div class="hc a a-draw" style="--d:1.5s"></div>
+          <div class="box gauge a a-pop" style="--d:1.7s">
+            <h5>Suspicion <span class="sym">s<sub>i</sub></span></h5>
+            <svg viewBox="0 0 120 70">
+              <defs><linearGradient id="gg" x1="0" x2="1"><stop offset="0" stop-color="#14b8a6"/><stop offset=".55" stop-color="#f59e0b"/><stop offset="1" stop-color="#ef4444"/></linearGradient></defs>
+              <path d="M12 62a48 48 0 0 1 96 0" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="10" stroke-linecap="round"/>
+              <path d="M12 62a48 48 0 0 1 96 0" fill="none" stroke="url(#gg)" stroke-width="10" stroke-linecap="round" opacity=".9"/>
+              <line x1="60" y1="10" x2="60" y2="20" stroke="rgba(255,255,255,.55)" stroke-width="1.5" stroke-dasharray="2 2"/>
+              <g class="needle"><line x1="60" y1="62" x2="92" y2="34" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/></g>
+              <circle cx="60" cy="62" r="5" fill="#fff"/>
+            </svg>
+            <div class="lbl">High <i>· above threshold</i></div>
+          </div>
+          <div class="fork"><svg viewBox="0 0 64 220" preserveAspectRatio="none">
+            <path pathLength="1" style="--d:3.2s" d="M0 110 C32 110 30 50 64 50" fill="none" stroke="rgba(20,184,166,.5)" stroke-width="1.6"/>
+            <path pathLength="1" style="--d:3.7s" d="M0 110 C32 110 30 170 64 170" fill="none" stroke="rgba(245,158,11,.95)" stroke-width="2.6"/>
+          </svg></div>
+          <div class="paths">
+            <div class="path path-lo a a-right" style="--d:3.4s">
+              <div class="ph"><span class="pt">Low suspicion · one step</span><span class="sym">β<sub>1</sub></span></div>
+              <div class="pn">First-order belief attribution</div>
+              <div class="pq"><em>What does P3 believe?</em> Enough for players who seem honest.</div>
+            </div>
+            <div class="path path-hi a a-right" style="--d:3.9s">
+              <div class="ph"><span class="pt">High suspicion · two steps</span><span class="sym">β<sub>1</sub> + β<sub>2</sub></span></div>
+              <div class="pn">Adds second-order influence attribution</div>
+              <div class="pq"><em>What does P3 want me to believe, and why?</em> Used only for suspicious players.</div>
+            </div>
+          </div>
+          <div class="hc a a-draw" style="--d:4.5s"></div>
+          <div class="box ded a a-pop" style="--d:4.8s">
+            <h5>Verdict <span class="sym">α̂</span></h5>
+            <div class="big">Both Evil players</div>
+            <div class="who2"><span class="vchip">P3</span><span class="vchip">P5</span></div>
+          </div>
+        </div>
+
+        <div class="out a a-up" style="--d:5.8s">
+          <span class="k">What AVCORP provides</span>
+          <span class="v"><b>250</b> Avalon games, <b>4,000</b> utterances labeled with deception tactics, and <b>1,000</b> investigator reasoning traces with suspicion scores and first- or second-order beliefs.</span>
+        </div>
+      </div>
+    </div></div>
+
+  </div>
+</div>
+</section>

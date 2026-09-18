@@ -1,0 +1,222 @@
+<section id="pipeline">
+        <div class="wrap">
+            <div class="sh">
+                <div class="sh-label">Architecture</div>
+                <div class="sh-title">Six-Stage Scaffolding Pipeline</div>
+                <div class="sh-sub">Stages 1–2 are one-time setup. Stages 3–6 repeat for each of the 5 rounds (R1–R5),
+                    expanding 25 expert-annotated samples to ~1,000 pilot samples.</div>
+            </div>
+
+            <!-- Stage track stepper -->
+            <div class="stage-track">
+                <div class="track-step s-complete">
+                    <div class="ts-circle">01</div>
+                    <div class="ts-label">Roles</div>
+                </div>
+                <div class="track-conn tc-complete"></div>
+                <div class="track-step s-complete">
+                    <div class="ts-circle">02</div>
+                    <div class="ts-label">History</div>
+                </div>
+                <div class="track-conn tc-complete"></div>
+                <div class="track-step s-complete">
+                    <div class="ts-circle">03</div>
+                    <div class="ts-label">Dialogue</div>
+                </div>
+                <div class="track-conn tc-complete"></div>
+                <div class="track-step s-complete">
+                    <div class="ts-circle">04</div>
+                    <div class="ts-label">Verify</div>
+                </div>
+                <div class="track-conn tc-complete"></div>
+                <div class="track-step s-complete">
+                    <div class="ts-circle">05</div>
+                    <div class="ts-label">ToM</div>
+                </div>
+                <div class="track-conn tc-complete"></div>
+                <div class="track-step s-complete">
+                    <div class="ts-circle">06</div>
+                    <div class="ts-label">Release</div>
+                </div>
+            </div>
+
+            <div class="pipeline-scroller">
+                <div class="pipeline">
+
+                    <!-- Stage 1 -->
+                    <div class="stage s-complete">
+                        <div class="stage-n">01</div>
+                        <div class="s-num">Stage 01</div>
+                        <span class="s-icon">🎲</span>
+                        <div class="s-title">Role Assignment</div>
+                        <div class="s-desc">Balanced Good/Evil assignment across all 250 games using a
+                            macro-distribution solver.</div>
+                        <div class="chips">
+                            <span class="chip">250 games</span>
+                            <span class="chip">3G / 2E</span>
+                            <span class="chip">deterministic</span>
+                        </div>
+                        <span class="badge b-green">✓ Complete</span>
+                        <div class="s-file">dataset-aug.ipynb</div>
+                        <div class="stage-drawer">
+                            <div class="dr-row"><span class="dr-k">Output</span><span
+                                    class="dr-v">role_history/Avalon_Balanced_250.csv</span></div>
+                            <div class="dr-row"><span class="dr-k">Constraint</span><span class="dr-v">3 Good / 2 Evil
+                                    per game</span></div>
+                            <div class="dr-row"><span class="dr-k">Method</span><span class="dr-v">macro-distribution
+                                    solver</span></div>
+                        </div>
+                    </div>
+
+                    <div class="conn">
+                        <div class="conn-line cl-complete"></div>
+                    </div>
+
+                    <!-- Stage 2 -->
+                    <div class="stage s-complete">
+                        <div class="stage-n">02</div>
+                        <div class="s-num">Stage 02</div>
+                        <span class="s-icon">📋</span>
+                        <div class="s-title">Public History</div>
+                        <div class="s-desc">Constraint-satisfying team compositions, voting patterns, and quest
+                            histories. Zero hard-constraint violations.</div>
+                        <div class="chips">
+                            <span class="chip">250 games</span>
+                            <span class="chip">5 rounds</span>
+                            <span class="chip">0 violations</span>
+                        </div>
+                        <span class="badge b-green">✓ Complete</span>
+                        <div class="s-file">dataset-aug-public-history.ipynb</div>
+                        <div class="stage-drawer">
+                            <div class="dr-row"><span class="dr-k">Output</span><span
+                                    class="dr-v">role_history/Avalon_R1_Public_History.csv</span></div>
+                            <div class="dr-row"><span class="dr-k">Columns</span><span class="dr-v">public_history ·
+                                    prior_summary_gold</span></div>
+                            <div class="dr-row"><span class="dr-k">Violations</span><span class="dr-v">0 hard-constraint
+                                    violations</span></div>
+                        </div>
+                    </div>
+
+                    <div class="conn">
+                        <div class="conn-line cl-complete"></div>
+                    </div>
+
+                    <!-- Stage 3 -->
+                    <div class="stage s-complete">
+                        <div class="stage-n">03</div>
+                        <div class="s-num">Stage 03</div>
+                        <span class="s-icon">💬</span>
+                        <div class="s-title">Dialogue Generation</div>
+                        <div class="s-desc">Two-pass LLM pipeline: GPT-5.2 tactic precompute → GPT-5.2 / Gemini-3.1
+                            annotated dialogue. R1 used single-pass.</div>
+                        <div class="chips">
+                            <span class="chip">37 tactics</span>
+                            <span class="chip">2-pass (R2+)</span>
+                            <span class="chip">R1✓ R2✓ R3✓ R4✓ R5✓</span>
+                        </div>
+                        <span class="badge b-green">✓ Complete</span>
+                        <div class="s-file">log-gen-r{N}.ipynb</div>
+                        <div class="stage-drawer">
+                            <div class="dr-row"><span class="dr-k">Pass 1</span><span class="dr-v">GPT-5.2 tactic
+                                    precompute</span></div>
+                            <div class="dr-row"><span class="dr-k">Pass 2</span><span class="dr-v">GPT-5.2 +
+                                    Gemini-3.1</span></div>
+                            <div class="dr-row"><span class="dr-k">Output</span><span
+                                    class="dr-v">generated_rx_seeds_*.csv</span></div>
+                        </div>
+                    </div>
+
+                    <div class="conn">
+                        <div class="conn-line cl-complete"></div>
+                    </div>
+
+                    <!-- Stage 4 -->
+                    <div class="stage s-complete">
+                        <div class="stage-n">04</div>
+                        <div class="s-num">Stage 04</div>
+                        <span class="s-icon">🔬</span>
+                        <div class="s-title">Dialogue Verification</div>
+                        <div class="s-desc">Claude Sonnet 4.5 blind multicriteria evaluation. 5-criterion binary scoring
+                            with targeted corrections and full-custom fallback.</div>
+                        <div class="chips">
+                            <span class="chip">5 criteria</span>
+                            <span class="chip">blind A/B</span>
+                            <span class="chip">R1✓ R2✓ R3✓ R4✓ R5✓</span>
+                        </div>
+                        <span class="badge b-green">✓ Complete</span>
+                        <div class="s-file">log-gen-verifier-r{N}.ipynb</div>
+                        <div class="stage-drawer">
+                            <div class="dr-row"><span class="dr-k">Verifier</span><span class="dr-v">Claude Sonnet
+                                    4.5</span></div>
+                            <div class="dr-row"><span class="dr-k">Criteria</span><span class="dr-v">5 binary pass/fail
+                                    scores</span></div>
+                            <div class="dr-row"><span class="dr-k">Max attempts</span><span class="dr-v">3 correction
+                                    loops</span></div>
+                        </div>
+                    </div>
+
+                    <div class="conn">
+                        <div class="conn-line cl-complete"></div>
+                    </div>
+
+                    <!-- Stage 5 -->
+                    <div class="stage s-complete">
+                        <div class="stage-n">05</div>
+                        <div class="s-num">Stage 05</div>
+                        <span class="s-icon">🧠</span>
+                        <div class="s-title">Reasoning Traces</div>
+                        <div class="s-desc">ToM annotation via ReCon + ReAct prompting: abductive hypotheses, suspicion
+                            calibration, and nested belief chains.</div>
+                        <div class="chips">
+                            <span class="chip">ReCon</span>
+                            <span class="chip">ReAct</span>
+                            <span class="chip">ToM depth ≤ 2</span>
+                        </div>
+                        <span class="badge b-green">✓ Complete</span>
+                        <div class="s-file">log-gen-tom.ipynb</div>
+                        <div class="stage-drawer">
+                            <div class="dr-row"><span class="dr-k">Column</span><span class="dr-v">reasoning_gold</span>
+                            </div>
+                            <div class="dr-row"><span class="dr-k">Keys</span><span class="dr-v">abduction · suspicion ·
+                                    beliefs · deduction</span></div>
+                            <div class="dr-row"><span class="dr-k">ToM depth</span><span class="dr-v">k ≤ 2
+                                    required</span></div>
+                        </div>
+                    </div>
+
+                    <div class="conn">
+                        <div class="conn-line cl-complete"></div>
+                    </div>
+
+                    <!-- Stage 6 -->
+                    <div class="stage s-complete">
+                        <div class="stage-n">06</div>
+                        <div class="s-num">Stage 06</div>
+                        <span class="s-icon">🔍</span>
+                        <div class="s-title">Trace Verification</div>
+                        <div class="s-desc">Multi-criteria ToM quality scoring via Claude Sonnet 4.5. Validates
+                            reasoning coherence, abductive soundness, and belief-chain consistency.</div>
+                        <div class="chips">
+                            <span class="chip">Claude 4.5</span>
+                            <span class="chip">ToM criteria</span>
+                            <span class="chip">blind eval</span>
+                        </div>
+                        <span class="badge b-green">✓ Complete</span>
+                        <div class="s-file">log-gen-verifier-tom.ipynb</div>
+                        <div class="stage-drawer">
+                            <div class="dr-row"><span class="dr-k">Output</span><span
+                                    class="dr-v">Deception-Dataset.csv</span></div>
+                            <div class="dr-row"><span class="dr-k">Target</span><span class="dr-v">HuggingFace Hub +
+                                    arXiv</span></div>
+                            <div class="dr-row"><span class="dr-k">Venue</span><span class="dr-v">EMNLP 2026</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <p style="text-align:center;font-size:.7rem;color:var(--text-3);margin-top:.75rem">← scroll horizontally on
+                small screens</p>
+        </div>
+    </section>

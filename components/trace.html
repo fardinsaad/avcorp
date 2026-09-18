@@ -1,0 +1,70 @@
+<section id="trace">
+        <div class="wrap">
+            <div class="sh">
+                <div class="sh-label">Stage 5 &amp; 6</div>
+                <div class="sh-title">Reasoning Traces: Two Frameworks, One Blind Judge</div>
+                <div class="sh-sub">For each of the 1,000 verified rounds, GPT-5.4 writes the investigator's reasoning
+                    twice, once with ReAct and once with ReCon. Both see only what the investigator could see; the true
+                    roles stay hidden.</div>
+            </div>
+
+            <div class="tr-in">
+                <span class="tr-in-l">Input</span>
+                <span class="tr-chip">Public history <i>H<sub>1:r</sub></i></span>
+                <span class="tr-chip">Discussion <i>D<sub>1:r</sub></i></span>
+                <span class="tr-chip">Earlier traces <i>ρ<sub>1:r−1</sub></i></span>
+                <span class="tr-chip tr-lock">True roles <i>α</i> withheld</span>
+            </div>
+
+            <div class="tr-lanes">
+                <div class="tr-lane tr-react" id="trReact">
+                    <div class="tr-lh"><b>ReAct</b><span>Trace A · GPT-5.4</span></div>
+                    <div class="tr-steps">
+                        <div class="tr-s"><em>Thought</em><span>Which history events matter?</span></div>
+                        <div class="tr-s"><em>Action</em><span>Isolate the diagnostic events</span></div>
+                        <div class="tr-s"><em>Observation</em><span>Record what they imply</span></div>
+                        <div class="tr-s"><em>Thought</em><span>Do the utterances fit?</span></div>
+                        <div class="tr-s"><em>Action</em><span>Cross-check specific utterances</span></div>
+                        <div class="tr-s"><em>Observation</em><span>Note agreements and conflicts</span></div>
+                        <div class="tr-s tr-syn"><em>Synthesis</em><span>Build the trace ρ</span></div>
+                    </div>
+                </div>
+                <div class="tr-lane tr-recon" id="trRecon">
+                    <div class="tr-lh"><b>ReCon</b><span>Trace B · GPT-5.4</span></div>
+                    <div class="tr-steps">
+                        <div class="tr-s tr-big"><em>Formulation</em><span>First-order view: infer each player's
+                                alignment from quests, votes, and speech</span></div>
+                        <div class="tr-s tr-big"><em>Refinement</em><span>Second-order view: what does each player want
+                                the investigator to believe? Check that the evidence is sufficient and consistent across
+                                rounds</span></div>
+                        <div class="tr-s tr-syn"><em>Output</em><span>Build the trace ρ</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tr-schema">
+                <div class="tr-sh">Both frameworks fill the same six fields</div>
+                <div class="tr-fields" id="trFields">
+                    <div class="tr-f"><b>h<sub>i</sub></b><span>Abductive hypotheses: a Good and an Evil explanation for
+                            each player</span></div>
+                    <div class="tr-f tr-f-s"><b>s<sub>i</sub></b><span>Suspicion level</span>
+                        <div class="tr-meter" aria-hidden="true"><i>Minimal</i><i>Mild</i><i>Moderate</i><i>Strong</i><i>Extreme</i></div>
+                    </div>
+                    <div class="tr-f"><b>β<sub>1</sub><sup>i</sup></b><span>First-order belief, for every player</span></div>
+                    <div class="tr-f tr-f-gate" id="trGate"><b>β<sub>2</sub><sup>i</sup></b><span>Second-order influence
+                            attribution, only for Strong or Extreme suspicion</span><em class="tr-gate-l">gated</em></div>
+                    <div class="tr-f"><b>û</b><span>The investigator's utterance</span></div>
+                    <div class="tr-f"><b>α̂</b><span>Deduction: the suspected Evil players</span></div>
+                </div>
+                <div class="tr-rule"><b>Definitive Deduction Rule.</b> If the investigator sat on a two-person quest
+                    that failed, its partner must be Evil: suspicion Extreme, and named in α̂.</div>
+            </div>
+
+            <div class="tr-judge">
+                <div class="tr-pair"><span class="tr-tag tr-a">Trace A</span><span class="tr-tag tr-b">Trace B</span><small>framework names hidden</small></div>
+                <div class="tr-jarrow" aria-hidden="true"><i></i></div>
+                <div class="tr-jbox"><b>Stage 6 · Claude Sonnet 4.6</b><span>Blind judge scores both traces on four
+                        criteria and keeps the better one</span></div>
+            </div>
+        </div>
+    </section>
