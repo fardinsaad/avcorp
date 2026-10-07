@@ -12,6 +12,7 @@ function initSections() {
 
     // [section, [[selector, variant, step ms, base delay ms], ...]]
     const PLAN = [
+        ['#repo',     [['.rp-top', 'up', 0, 0], ['.rp-item', 'up', 90, 200]]],
         ['#pipeline', [['.track-step', 'pop', 110, 0], ['.track-conn', 'draw', 110, 60], ['.stage', 'up', 90, 350]]],
         ['#theory',   [['.theory-card', 'up', 120, 0], ['.th-map', 'up', 0, 500]]],
         ['#matrix',   [['.tx-bar', 'up', 0, 0], ['.tx-ch, .tx-rh', 'pop', 60, 150], ['.tx-cell', 'pop', 35, 450], ['.tx-panel', 'left', 0, 700], ['.tx-scale', 'up', 140, 900]]],
@@ -85,22 +86,13 @@ function buildPhase2(rm) {
     const dots = document.getElementById('p2Dots');
     if (!dots) return;
     for (let i = 0; i < 100; i++) dots.appendChild(document.createElement('i'));
-    const sqs = document.getElementById('p2Sqs');
-    // 100 IAA items: 30 from games ending in R3, 20 in R4, 50 in R5
-    for (let i = 0; i < 100; i++) {
-        const q = document.createElement('i');
-        q.className = i < 30 ? 'q3' : i < 50 ? 'q4' : 'q5';
-        q.style.setProperty('--qd', (i * 14) + 'ms');
-        sqs.appendChild(q);
-    }
-    document.querySelectorAll('.xd-syn').forEach(g => { for (let i = 0; i < 24; i++) g.appendChild(document.createElement('i')); });
-    document.querySelectorAll('.xd-hum').forEach(g => { for (let i = 0; i < 24; i++) g.appendChild(document.createElement('i')); });
-    document.querySelectorAll('#scale .p2-bar i').forEach((b, i) => b.style.setProperty('--bd', (500 + i * 220) + 'ms'));
+    // one dot per 10 synthetic games, one per human game
+    document.querySelectorAll('.xd-syn').forEach(g => { for (let i = 0; i < 25; i++) g.appendChild(document.createElement('i')); });
+    document.querySelectorAll('.xd-hum').forEach(g => { for (let i = 0; i < 20; i++) g.appendChild(document.createElement('i')); });
+    document.querySelectorAll('#scale .p2-bars').forEach(c => c.querySelectorAll('.p2-bar i')
+        .forEach((b, i) => b.style.setProperty('--bd', (500 + i * 220) + 'ms')));
     setGames(rm ? 5000 : 250, false);
-    if (rm) {
-        document.querySelector('#scale .p2-bars').classList.add('go');
-        sqs.classList.add('go');
-    }
+    if (rm) document.querySelectorAll('#scale .p2-bars').forEach(c => c.classList.add('go'));
 }
 
 function setGames(n, animate) {
@@ -123,8 +115,7 @@ function setGames(n, animate) {
 }
 
 function startPhase2(sec) {
-    setTimeout(() => sec.querySelector('.p2-bars').classList.add('go'), 900);
-    setTimeout(() => document.getElementById('p2Sqs').classList.add('go'), 1100);
+    sec.querySelectorAll('.p2-bars').forEach((c, i) => setTimeout(() => c.classList.add('go'), 900 + i * 200));
     // the scaling loop: 250 → 2,000 → 5,000 → back, only while visible
     let vis = true;
     new IntersectionObserver(en => en.forEach(e => { vis = e.isIntersecting; }), { threshold: 0.2 })
@@ -145,3 +136,12 @@ function startPhase2(sec) {
         hum[h++].classList.add('lit');
     }, 360);
 }
+
+// ─── HERO: copy the clone command ────────────────────────────────────────────
+document.addEventListener('click', e => {
+    const btn = e.target.closest('[data-copy]');
+    if (!btn) return;
+    const done = () => { btn.textContent = 'Copied'; btn.classList.add('ok');
+        setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('ok'); }, 1600); };
+    if (navigator.clipboard) navigator.clipboard.writeText(btn.dataset.copy).then(done, () => {});
+});

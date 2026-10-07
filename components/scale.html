@@ -3,8 +3,8 @@
             <div class="sh">
                 <div class="sh-label">Phases 1 and 2</div>
                 <div class="sh-title">Training, IAA, and Cross-Domain Test</div>
-                <div class="sh-sub">Phase 1 built the corpus. Phase 2 trains a detector on it, checks the reasoning
-                    traces against human annotators, and tests the detector on games that people played.</div>
+                <div class="sh-sub">Phase 1 built the corpus. Phase 2 trained a detector on it, checked the reasoning
+                    traces against human annotators, and tested the detector on games that people played.</div>
             </div>
 
             <div class="p2-top">
@@ -41,37 +41,69 @@
 
             <div class="p2-grid">
                 <div class="p2-card p2-c-train">
-                    <div class="p2-head"><span class="p2-num">01</span><span class="p2-name">Detector training</span><span class="p2-status s-done">Done</span></div>
-                    <p class="p2-desc">Qwen3-8B, fine-tuned with SFT and then GRPO on the 1,000 investigator traces.
-                        We score how often it names both Evil players when each held-out game ends.</p>
+                    <div class="p2-head"><span class="p2-num">01</span><span class="p2-name">Detector training</span></div>
+                    <p class="p2-desc">Qwen3-8B learns from the 1,000 reasoning traces, first by copying them (SFT) and
+                        then by trial and reward (GRPO). We count how often it names both Evil players when a held-out
+                        game ends, reading only its own earlier reasoning.</p>
                     <div class="p2-bars">
-                        <div class="p2-row"><span>Base model</span><div class="p2-bar"><i style="--w:72%"></i></div><b>72.0%</b></div>
-                        <div class="p2-row"><span>SFT</span><div class="p2-bar"><i style="--w:84%"></i></div><b>84.0%</b></div>
-                        <div class="p2-row p2-hi"><span>SFT + GRPO</span><div class="p2-bar"><i style="--w:92%"></i></div><b>92.0%</b></div>
+                        <div class="p2-grp">Our detector</div>
+                        <div class="p2-row"><span>Untrained</span><div class="p2-bar"><i style="--w:48%"></i></div><b>48.0%</b></div>
+                        <div class="p2-row"><span>SFT</span><div class="p2-bar"><i style="--w:48%"></i></div><b>48.0%</b></div>
+                        <div class="p2-row p2-hi"><span>SFT + GRPO</span><div class="p2-bar"><i style="--w:72%"></i></div><b>72.0%</b></div>
+                        <div class="p2-grp">Frontier models</div>
+                        <div class="p2-row p2-ref"><span>Claude Opus 5.5</span><div class="p2-bar"><i style="--w:72%"></i></div><b>72.0%</b></div>
+                        <div class="p2-row p2-ref"><span>GPT-5.6 Sol</span><div class="p2-bar"><i style="--w:64%"></i></div><b>64.0%</b></div>
+                        <div class="p2-row p2-ref"><span>Gemini 3.1 Pro</span><div class="p2-bar"><i style="--w:56%"></i></div><b>56.0%</b></div>
+                        <div class="p2-row p2-ref"><span>DeepSeek V4 Pro</span><div class="p2-bar"><i style="--w:48%"></i></div><b>48.0%</b></div>
+                        <div class="p2-grp">Upper bound</div>
                         <div class="p2-row p2-gold"><span>Gold traces</span><div class="p2-bar"><i style="--w:92%"></i></div><b>92.0%</b></div>
                     </div>
-                    <p class="p2-note">25 held-out games. SFT + GRPO names both Evil players in 23 of 25 games, the same
-                        as the gold traces. One H100 GPU, 28 GPU-hours.</p>
+                    <p class="p2-note">25 held-out games. The best detector names both Evil players in 18 of 25 games, as
+                        many as Claude Opus 5.5 and more than the other three frontier models.</p>
                 </div>
 
                 <div class="p2-card p2-c-iaa">
-                    <div class="p2-head"><span class="p2-num">02</span><span class="p2-name">Inter-annotator agreement (IAA)</span><span class="p2-status s-ready">Sheet ready</span></div>
-                    <p class="p2-desc">Two annotators, blind to the true roles, score 100 reasoning traces from 25 games
-                        with the Stage 6 criteria. We report Cohen's κ and how well the LLM judge agrees with each
-                        annotator.</p>
-                    <div class="p2-sqs" id="p2Sqs" aria-hidden="true"></div>
-                    <div class="p2-legend"><span><i class="lg-r3"></i>Games ending in round 3 · 30 traces</span><span><i class="lg-r4"></i>Round 4 · 20</span><span><i class="lg-r5"></i>Round 5 · 50</span></div>
+                    <div class="p2-head"><span class="p2-num">02</span><span class="p2-name">Inter-annotator agreement (IAA)</span></div>
+                    <p class="p2-desc">Two annotators, blind to the true roles, pick the better of two reasoning traces
+                        for 100 items from 25 games. We compare their picks with each other and with the LLM judge.</p>
+                    <div class="p2-bars">
+                        <div class="p2-grp">All 100 items</div>
+                        <div class="p2-row p2-hi"><span>A1 vs A2</span><div class="p2-bar"><i style="--w:97%"></i></div><b>97/100</b></div>
+                        <div class="p2-row"><span>A1 vs judge</span><div class="p2-bar"><i style="--w:96%"></i></div><b>96/100</b></div>
+                        <div class="p2-row"><span>A2 vs judge</span><div class="p2-bar"><i style="--w:97%"></i></div><b>97/100</b></div>
+                        <div class="p2-row"><span>Judge vs both</span><div class="p2-bar"><i style="--w:97.9%"></i></div><b>95/97</b></div>
+                        <div class="p2-grp">79 ties the judge broke using the true roles</div>
+                        <div class="p2-row"><span>A1 vs judge</span><div class="p2-bar"><i style="--w:97.5%"></i></div><b>77/79</b></div>
+                        <div class="p2-row"><span>A2 vs judge</span><div class="p2-bar"><i style="--w:98.7%"></i></div><b>78/79</b></div>
+                    </div>
+                    <div class="p2-split" aria-hidden="true"><i style="--s:79%"><em>79 tiebreak</em></i><i style="--s:21%"><em>21 clean win</em></i></div>
+                    <div class="p2-kap"><span>A1 vs A2 <b>κ 0.94</b></span><span>A1 vs judge <b>κ 0.92</b></span><span>A2 vs judge <b>κ 0.94</b></span></div>
+                    <p class="p2-note">"Judge vs both" counts the 97 items where the two annotators agree. A κ above 0.81
+                        counts as almost perfect agreement. People who never saw the roles still pick the trace the judge
+                        picked with them.</p>
                 </div>
 
                 <div class="p2-card p2-c-xd">
-                    <div class="p2-head"><span class="p2-num">03</span><span class="p2-name">Cross-domain test</span><span class="p2-status s-plan">Planned</span></div>
-                    <p class="p2-desc">Does a detector trained on synthetic games work on real people? We test it on
-                        <b>InMind-Avalon</b>: 30 Avalon games played by humans.</p>
+                    <div class="p2-head"><span class="p2-num">03</span><span class="p2-name">Cross-domain test</span></div>
+                    <p class="p2-desc">Does a detector trained on synthetic games work on games people played? We test it
+                        on <b>Avalon-NLU</b>: 20 games among six human players.</p>
                     <div class="p2-xd" aria-hidden="true">
                         <div class="xd-side"><div class="xd-grid xd-syn"></div><span>AVCORP<br>250 synthetic games</span></div>
                         <div class="xd-arrow"><i></i><em>transfer</em></div>
-                        <div class="xd-side"><div class="xd-grid xd-hum"></div><span>InMind-Avalon<br>30 human games</span></div>
+                        <div class="xd-side"><div class="xd-grid xd-hum"></div><span>Avalon-NLU<br>20 human games</span></div>
                     </div>
+                    <div class="p2-bars">
+                        <div class="p2-grp">Games solved, best run</div>
+                        <div class="p2-row"><span>Untrained</span><div class="p2-bar"><i style="--w:42.1%"></i></div><b>42.1%</b></div>
+                        <div class="p2-row p2-hi"><span>SFT</span><div class="p2-bar"><i style="--w:57.9%"></i></div><b>57.9%</b></div>
+                        <div class="p2-row"><span>SFT + GRPO</span><div class="p2-bar"><i style="--w:52.6%"></i></div><b>52.6%</b></div>
+                        <div class="p2-grp">F1, mean of runs</div>
+                        <div class="p2-row"><span>Untrained</span><div class="p2-bar"><i style="--w:45.9%"></i></div><b>0.459</b></div>
+                        <div class="p2-row"><span>SFT</span><div class="p2-bar"><i style="--w:57.1%"></i></div><b>0.571</b></div>
+                        <div class="p2-row p2-hi"><span>SFT + GRPO</span><div class="p2-bar"><i style="--w:59.0%"></i></div><b>0.590</b></div>
+                    </div>
+                    <p class="p2-note">19 games (one game no model solves is left out). Games solved: both Evil players
+                        named at the end. F1 scores every round. Untrained: two prompts. SFT and SFT + GRPO: eight runs each.</p>
                 </div>
             </div>
         </div>
