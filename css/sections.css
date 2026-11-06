@@ -172,6 +172,28 @@ section + section { border-top: none; }
 @media (max-width: 1000px) { #repo .rp-top { grid-template-columns: 1fr auto; } #repo .rp-clone { grid-column: 1 / -1; grid-row: 2; } #repo .rp-items { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 640px) { #repo > .wrap { padding: 1.1rem 1rem; } #repo .rp-go { display: none; } #repo .rp-top { grid-template-columns: 1fr; } #repo .rp-items { grid-template-columns: 1fr; } }
 
+/* ===== REPO: logos, Hugging Face row, hero favicon ===== */
+.hero-title { display: flex; align-items: center; justify-content: center; gap: .16em; }
+.hero-title .hero-logo { height: .92em; width: auto; flex: none; filter: drop-shadow(0 6px 18px rgba(0, 0, 0, .45)); }
+#repo .rp-ico-gh { color: #f0f6fc; background: rgba(240, 246, 252, .07); border-color: rgba(240, 246, 252, .28); }
+#repo .rp-ico-hf { background: rgba(255, 210, 30, .1); border-color: rgba(255, 210, 30, .42); }
+#repo .rp-ico-hf img { width: 30px; height: 30px; display: block; }
+#repo .rp-hf { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--border); }
+#repo .rp-hf .rp-txt small { color: #fcd34d; }
+#repo .rp-hf .rp-id:hover b { color: #fde68a; }
+#repo .rp-hf-links { display: flex; gap: 10px; min-width: 0; }
+#repo .rp-chip { flex: 1; min-width: 0; display: grid; gap: 2px; padding: 8px 14px; border-radius: 10px; border: 1px solid var(--border);
+    background: rgba(0, 0, 0, .35); transition: border-color .2s, background .2s; }
+#repo .rp-chip b { font: 600 .82rem 'Space Grotesk', sans-serif; color: var(--text); }
+#repo .rp-chip code { font: 500 .72rem 'JetBrains Mono', monospace; color: #fcd34d; overflow-wrap: anywhere; }
+#repo .rp-chip:hover { border-color: rgba(255, 210, 30, .5); background: rgba(255, 210, 30, .07); }
+#repo .rp-go-hf { color: #fcd34d; border-color: rgba(255, 210, 30, .5); background: rgba(255, 210, 30, .1); }
+#repo .rp-go-hf:hover { background: rgba(255, 210, 30, .2); }
+@media (max-width: 1000px) { #repo .rp-hf-links { grid-column: 1 / -1; grid-row: 2; } }
+#repo .rp-id, #repo .rp-txt { min-width: 0; }
+#repo .rp-txt code { overflow-wrap: anywhere; }
+@media (max-width: 640px) { #repo .rp-hf-links { flex-direction: column; } #repo .rp-top { grid-template-columns: minmax(0, 1fr); } #repo .rp-txt b { font-size: 1.08rem; } }
+
 /* ===== PHASE 2: group labels and the IAA item split ===== */
 #scale .p2-grp { font: 700 9.5px 'JetBrains Mono', monospace; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); margin-top: 4px; }
 #scale .p2-grp:first-child { margin-top: 0; }
