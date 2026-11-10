@@ -139,9 +139,22 @@ function startPhase2(sec) {
 
 // ─── HERO: copy the clone command ────────────────────────────────────────────
 document.addEventListener('click', e => {
-    const btn = e.target.closest('[data-copy]');
+    const btn = e.target.closest('[data-copy], [data-copy-from]');
     if (!btn) return;
     const done = () => { btn.textContent = 'Copied'; btn.classList.add('ok');
         setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('ok'); }, 1600); };
-    if (navigator.clipboard) navigator.clipboard.writeText(btn.dataset.copy).then(done, () => {});
+    const src = btn.dataset.copyFrom ? document.querySelector(btn.dataset.copyFrom) : null;
+    const text = src ? src.textContent : btn.dataset.copy;
+    if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, () => {});
+});
+
+// ─── HERO: Cite button opens the BibTeX box ─────────────────────────────────
+document.addEventListener('click', e => {
+    const b = e.target.closest('.pb-cite');
+    if (!b) return;
+    const box = document.getElementById(b.getAttribute('aria-controls'));
+    if (!box) return;
+    const open = box.hidden;
+    box.hidden = !open;
+    b.setAttribute('aria-expanded', String(open));
 });

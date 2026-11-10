@@ -15,18 +15,18 @@
    initSections() calls initInteract() once the components exist.
    ===================================================================== */
 
-const IX_THEMES = ['midnight', 'obsidian', 'abyss', 'plum'];
+const IX_THEMES = ['obsidian', 'midnight', 'plum', 'abyss'];
 
 function applyTheme(name) {
-    if (!IX_THEMES.includes(name)) name = 'midnight';
+    if (!IX_THEMES.includes(name)) name = 'obsidian';
     document.documentElement.dataset.theme = name;
     document.querySelectorAll('.tsw').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.theme === name)));
     try { localStorage.setItem('avcorp-theme', name); } catch (e) { /* private mode */ }
 }
 
 function initThemes() {
-    let saved = 'midnight';
-    try { saved = localStorage.getItem('avcorp-theme') || 'midnight'; } catch (e) { /* private mode */ }
+    let saved = 'obsidian';
+    try { saved = localStorage.getItem('avcorp-theme') || 'obsidian'; } catch (e) { /* private mode */ }
     applyTheme(saved);
     document.querySelectorAll('.tsw').forEach(b => b.addEventListener('click', () => applyTheme(b.dataset.theme)));
 }
