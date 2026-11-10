@@ -2398,7 +2398,7 @@ footer {
 #motivation .flow-btn::before{content:'';position:absolute;inset:-2px;border-radius:inherit;padding:2.5px;z-index:-1;
   background:conic-gradient(from var(--ang),transparent 0 55%,rgba(20,184,166,.9) 70%,#fcd34d 86%,#ffffff 92%,transparent 96%);
   -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
-  mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);animation:mvSnake 3.2s linear infinite}
+  mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);mask-composite:exclude;animation:mvSnake 3.2s linear infinite}
 @keyframes mvSnake{to{--ang:360deg}}
 #motivation .flow-btn i{font-style:normal;flex:none;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;
   background:rgba(245,158,11,.2);border:1px solid rgba(252,211,77,.5);color:#fcd34d;font:700 15px 'Inter',sans-serif;animation:mvDrop 1.6s ease-in-out infinite;transition:transform .4s var(--ease)}
