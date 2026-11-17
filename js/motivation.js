@@ -206,7 +206,7 @@ function initNeuroBackground(){
     g.restore();return c;
   }
 
-  let SW=null,sLinks=[],W,H,DPR,brains=[],edges=[],pulses=[],glyphs=[],swarm=[],msgs=[],talk=null,on=true,raf,t0=performance.now();
+  let SW=null,sLinks=[],W,H,DPR,brains=[],edges=[],pulses=[],glyphs=[],swarm=[],msgs=[],talk=null,on=true,raf,t0=performance.now(),sp=1,calm=0,calmT=0,tS=0,last=null;
   function makeBrain(o){
     const b=Object.assign({n:[],M:new DOMMatrix()},o);
     b.spr=sprite(b.col,b.alpha,b.size*DPR/1000);b.k=b.spr.width/1000;
@@ -283,16 +283,16 @@ function initNeuroBackground(){
     sLinks.push({a,b,g:instant?1:0,state:'live',age:instant?Math.random()*800:0,life:500+Math.random()*1100});
   }
   function stepSwarm(t){
-    SW.rot+=.0007;placeSwarm(t);
+    SW.rot+=.0007*sp;placeSwarm(t);
     for(const a of swarm)a.flash*=.94;
     const live=sLinks.filter(l=>l.state!=='dying').length;
-    if(Math.random()<(live<swarm.length*2.3?.45:.12))addLink(false);
+    if(Math.random()<(live<swarm.length*2.3?.45:.12)*sp)addLink(false);
     for(let i=sLinks.length-1;i>=0;i--){const l=sLinks[i];
-      if(l.state==='dying'){l.g-=.03;if(l.g<=0){l.a.deg--;l.b.deg--;sLinks.splice(i,1)}continue}
-      l.g=Math.min(1,l.g+.03);if(++l.age>l.life)l.state='dying'}
-    if(Math.random()<.35&&sLinks.length){const l=sLinks[Math.floor(Math.random()*sLinks.length)];
+      if(l.state==='dying'){l.g-=.03*sp;if(l.g<=0){l.a.deg--;l.b.deg--;sLinks.splice(i,1)}continue}
+      l.g=Math.min(1,l.g+.03*sp);if((l.age+=sp)>l.life)l.state='dying'}
+    if(Math.random()<.35*sp&&sLinks.length){const l=sLinks[Math.floor(Math.random()*sLinks.length)];
       if(l.state==='live'&&l.g>=1){const f=Math.random()<.5,src=f?l.a:l.b;msgs.push({a:src,b:f?l.b:l.a,t:0,red:src.red});src.flash=1}}
-    if(Math.random()<.003){const a=swarm[Math.floor(Math.random()*swarm.length)];if(!a.red){a.red=true;a.flash=1}}
+    if(Math.random()<.003*sp){const a=swarm[Math.floor(Math.random()*swarm.length)];if(!a.red){a.red=true;a.flash=1}}
   }
   function drawSwarm(){
     for(const l of sLinks){const a=l.a,b=l.b,x2=a.x+(b.x-a.x)*l.g,y2=a.y+(b.y-a.y)*l.g;
@@ -301,7 +301,7 @@ function initNeuroBackground(){
       else{ctx.strokeStyle='rgba(160,172,196,.22)';ctx.lineWidth=.6}
       ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(x2,y2);ctx.stroke();
       if(l.g<1&&l.state!=='dying'){ctx.fillStyle='rgba(255,255,255,.9)';ctx.fillRect(x2-1.3,y2-1.3,2.6,2.6)}}
-    for(let i=msgs.length-1;i>=0;i--){const m=msgs[i];m.t+=.05;const x=m.a.x+(m.b.x-m.a.x)*m.t,y=m.a.y+(m.b.y-m.a.y)*m.t;
+    for(let i=msgs.length-1;i>=0;i--){const m=msgs[i];m.t+=.05*sp;const x=m.a.x+(m.b.x-m.a.x)*m.t,y=m.a.y+(m.b.y-m.a.y)*m.t;
       ctx.fillStyle=m.red?'rgba(248,113,113,.95)':'rgba(196,181,253,.95)';ctx.fillRect(x-1.6,y-1.6,3.2,3.2);
       if(m.t>=1){const r=m.b;if(!r.hub&&m.red!==r.red&&Math.random()<(m.red?.34:.32)){r.red=m.red;r.flash=1}msgs.splice(i,1)}}
     const hubCol=['220,38,38','126,34,206','37,99,235'];
@@ -315,12 +315,14 @@ function initNeuroBackground(){
   function dot(x,y,R,col,a){const g=ctx.createRadialGradient(x,y,0,x,y,R);g.addColorStop(0,`rgba(255,255,255,${a})`);g.addColorStop(.3,`rgba(${col},${a*.7})`);g.addColorStop(1,`rgba(${col},0)`);ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,R,0,6.2832);ctx.fill()}
   function ctrl(e){const a=e.a,b=e.b,dx=b.x-a.x,dy=b.y-a.y;return{x:(a.x+b.x)/2-dy*e.bend,y:(a.y+b.y)/2+dx*e.bend}}
   function frame(now){
-    const t=reduce?0:(now||performance.now())-t0;
+    const tn=now||performance.now(),dt=last===null?0:Math.min(64,tn-last);last=tn;
+    if(!reduce){calm+=(calmT-calm)*.04;sp=1-.65*calm;tS+=dt*sp}
+    const t=reduce?0:tS;
     ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,cv.width,cv.height);
     brains.forEach(b=>pose(b,t));
     ctx.setTransform(DPR,0,0,DPR,0,0);
     // 1. black-hat layer
-    glyphs.forEach((g,i)=>{if(!reduce){g.life++;g.x+=g.vx;g.y+=g.vy}const f=Math.max(0,Math.min(1,g.life/120,(g.max-g.life)/120));
+    glyphs.forEach((g,i)=>{if(!reduce){g.life+=sp;g.x+=g.vx*sp;g.y+=g.vy*sp}const f=Math.max(0,Math.min(1,g.life/120,(g.max-g.life)/120));
       if(g.hat)drawHat(g.x,g.y,g.size,.5*f);
       else{ctx.save();ctx.translate(g.x,g.y);ctx.rotate(g.rot);ctx.font=`500 ${g.size}px 'JetBrains Mono',monospace`;ctx.fillStyle=`rgba(${RED},${.46*f})`;ctx.fillText(g.txt,0,0);ctx.restore()}
       if(g.life>g.max||g.y<-40)glyphs[i]=newGlyph(false)});
@@ -333,22 +335,34 @@ function initNeuroBackground(){
       ctx.setLineDash([3,9]);ctx.lineWidth=1.2;ctx.strokeStyle=`rgba(${RED},.22)`;ctx.beginPath();ctx.moveTo(A.x,A.y);ctx.quadraticCurveTo(talk.C.x,talk.C.y,B.x,B.y);ctx.stroke();ctx.setLineDash([])}
     edges.forEach(e=>{const c=ctrl(e);ctx.strokeStyle=`rgba(${e.col},${(.07+e.glow*.4)*e.alpha})`;ctx.lineWidth=.7+e.glow;
       ctx.beginPath();ctx.moveTo(e.a.x,e.a.y);ctx.quadraticCurveTo(c.x,c.y,e.b.x,e.b.y);ctx.stroke();e.glow*=.94});
-    for(let i=pulses.length-1;i>=0;i--){const p=pulses[i];p.t+=p.s;
+    for(let i=pulses.length-1;i>=0;i--){const p=pulses[i];p.t+=p.s*sp;
       if(p.talk){const T=talk,x=q(T.A.x,T.C.x,T.B.x,p.t),y=q(T.A.y,T.C.y,T.B.y,p.t);dot(x,y,9,RED,.8);
         if(p.t>=1){pulses.splice(i,1);for(let k=0;k<3;k++)fire(T.dst.n[Math.floor(Math.random()*T.dst.n.length)])}continue}
       const e=p.o.e,a=p.o.from,b=p.o.to,c=ctrl(e),x=q(a.x,c.x,b.x,p.t),y=q(a.y,c.y,b.y,p.t);
       dot(x,y,5.5,e.col,.85*e.alpha+.1);e.glow=Math.min(1,e.glow+.07);
       if(p.t>=1){pulses.splice(i,1);b.v0+=e.w;if(b.v0>=1&&b.flash<.2)fire(b)}}
     if(pulses.length>220)pulses.splice(0,pulses.length-220);
-    brains.forEach(B=>B.n.forEach(n=>{n.v0*=.996;if(Math.random()<.0007)fire(n);
+    brains.forEach(B=>B.n.forEach(n=>{n.v0*=.996;if(Math.random()<.0007*sp)fire(n);
       if(n.flash>.02){const R=n.r*5*n.flash+3,g=ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,R);
         g.addColorStop(0,`rgba(${B.col},${.6*n.flash})`);g.addColorStop(1,`rgba(${B.col},0)`);ctx.fillStyle=g;ctx.beginPath();ctx.arc(n.x,n.y,R,0,6.2832);ctx.fill()}
       ctx.fillStyle=`rgba(${B.col},${(.35+n.flash*.65)*Math.min(1,B.alpha+.25)})`;ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,6.2832);ctx.fill();n.flash*=.93}));
-    if(talk&&Math.random()<.006)pulses.push({talk:true,t:0,s:.006});
+    if(talk&&Math.random()<.006*sp)pulses.push({talk:true,t:0,s:.006});
     if(on&&!reduce)raf=requestAnimationFrame(frame);
   }
-  build();if(reduce)brains.forEach(B=>B.n.slice(0,4).forEach(fire));frame();
-  let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{cancelAnimationFrame(raf);build();frame()},200)});
+  // Calm mode: once the hero has scrolled away, the background slows down
+  // and CSS dims the canvas (html.bg-calm), so it
+  // does not compete with reading. Scrolling back to the hero restores it.
+  const hero=document.querySelector('.hero');
+  function checkCalm(init){
+    const c=!!hero&&hero.getBoundingClientRect().bottom<innerHeight*.45,v=c?1:0;
+    if(v===calmT&&!init)return;
+    calmT=v;document.documentElement.classList.toggle('bg-calm',c);
+    if(reduce||init){calm=v;sp=1-.65*v}
+    if(reduce&&!init)frame();
+  }
+  let sq=false;addEventListener('scroll',()=>{if(sq)return;sq=true;requestAnimationFrame(()=>{sq=false;checkCalm()})},{passive:true});
+  build();checkCalm(true);if(reduce)brains.forEach(B=>B.n.slice(0,4).forEach(fire));frame();
+  let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{cancelAnimationFrame(raf);build();checkCalm();frame()},200)});
 }
 
 function initMotivation(){

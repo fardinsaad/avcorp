@@ -239,6 +239,16 @@ a.pb-arxiv:hover { background: linear-gradient(120deg, rgba(220, 38, 38, .75), r
     white-space: pre-wrap; overflow-wrap: anywhere; }
 @media (prefers-reduced-motion: reduce) { .paper-bar, .pb-arxiv::after, .cite-box { animation: none; } }
 
+/* ===== CALM BACKGROUND: below the hero (html.bg-calm, set in motivation.js)
+   the canvas dims and a veil darkens the reading column ===== */
+#neuro { transition: opacity 1.2s ease; }
+html.bg-calm #neuro { opacity: .3; }
+.bg-veil { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0; transition: opacity 1.2s ease;
+    background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--bg) 78%, transparent) 20%,
+        color-mix(in srgb, var(--bg) 78%, transparent) 80%, transparent 100%); }
+html.bg-calm .bg-veil { opacity: 1; }
+.rm #neuro, .rm .bg-veil { transition: none; }
+
 /* ===== PHASE 2: group labels and the IAA item split ===== */
 #scale .p2-grp { font: 700 9.5px 'JetBrains Mono', monospace; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); margin-top: 4px; }
 #scale .p2-grp:first-child { margin-top: 0; }
